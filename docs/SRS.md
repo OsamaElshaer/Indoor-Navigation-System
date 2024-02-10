@@ -182,3 +182,4 @@ The users of the Indoor Navigator App can be categorized into the following clas
 ### 5.3 Sequence Diagram
 
 ## 7. Traceability Matrix <a name="traceability-matrix"></a>
+    1. excel sheet to track tasks to ensure that all requirements are deliverables.
