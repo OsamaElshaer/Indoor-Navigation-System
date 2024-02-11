@@ -190,23 +190,7 @@ write how the system will interact with the hardware devices (wifi access points
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DataFrame Table</title>
-<style>
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-    background-color: #999999; /* Background color for all cells (darker gray) */
-  }
-  th {
-    font-weight: bold;
-  }
-</style>
+
 </head>
 <body>
 
