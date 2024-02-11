@@ -34,7 +34,7 @@
   - [5. System Models ](#5-system-models-)
     - [5.1 Context Diagram](#51-context-diagram)
     - [5.2 Data Flow Diagram (DFD)](#52-data-flow-diagram-dfd)
-    - [5.3 Sequence Diagram](#53-sequence-diagram)
+    - [5.3 Data Example:](#53-data-example)
   - [7. Traceability Matrix ](#7-traceability-matrix-)
 
 ## 1. Introduction <a name="introduction"></a>
@@ -183,7 +183,111 @@ write how the system will interact with the hardware devices (wifi access points
 <img src="./images/DFD.png" alt="" width="1000" height="500">
 
 
-### 5.3 Sequence Diagram
+
+### 5.3 Data Example:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataFrame Table</title>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    background-color: #999999;
+  }
+  th {
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<table>
+  <thead>
+    <tr>
+      <th></th> <!-- Index column -->
+      <th>AP1</th>
+      <th>AP2</th>
+      <th>AP3</th>
+      <th>AP4</th>
+      <th>AP5</th>
+      <th>AP6</th>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-37</td>
+      <td>-36</td>
+      <td>-36</td>
+      <td>-32</td>
+      <td>-33</td>
+      <td>-61</td>
+      <td>0.548814</td>
+      <td>0.715189</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-35</td>
+      <td>-35</td>
+      <td>-35</td>
+      <td>-41</td>
+      <td>-41</td>
+      <td>-70</td>
+      <td>0.544883</td>
+      <td>0.423655</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-30</td>
+      <td>-36</td>
+      <td>-32</td>
+      <td>-40</td>
+      <td>-35</td>
+      <td>-61</td>
+      <td>0.645894</td>
+      <td>0.437587</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-41</td>
+      <td>-42</td>
+      <td>-43</td>
+      <td>-42</td>
+      <td>-41</td>
+      <td>-56</td>
+      <td>0.891773</td>
+      <td>0.963663</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-44</td>
+      <td>-44</td>
+      <td>-44</td>
+      <td>-35</td>
+      <td>-36</td>
+      <td>-53</td>
+      <td>0.383442</td>
+      <td>0.791725</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
+
 
 ## 7. Traceability Matrix <a name="traceability-matrix"></a>
     1. excel sheet to track tasks to ensure that all requirements are deliverables.
+
+
