@@ -1,8 +1,8 @@
-# System Requirements Specification (*SRS*)
+# System Requirements Specification (_SRS_)
 
 ## Table of Contents
 
-- [System Requirements Specification (*SRS*)](#system-requirements-specification-srs)
+- [System Requirements Specification (_SRS_)](#system-requirements-specification-srs)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction ](#1-introduction-)
     - [1.1 Purpose of the Document](#11-purpose-of-the-document)
@@ -32,8 +32,8 @@
     - [4.1 User Registration](#41-user-registration)
     - [4.2 Navigation](#42-navigation)
   - [5. System Models ](#5-system-models-)
-    - [5.1 Data Flow Diagram (DFD)](#51-data-flow-diagram-dfd)
-    - [5.2 Entity-Relationship Diagram (ERD)](#52-entity-relationship-diagram-erd)
+    - [5.1 Context Diagram](#51-context-diagram)
+    - [5.2 Data Flow Diagram (DFD)](#52-data-flow-diagram-dfd)
     - [5.3 Sequence Diagram](#53-sequence-diagram)
   - [7. Traceability Matrix ](#7-traceability-matrix-)
 
@@ -43,7 +43,7 @@ The System Requirements Specification (SRS) document outlines the requirements f
 
 ### 1.1 Purpose of the Document
 
-This document serves as a comprehensive guide to understanding the functional and non-functional requirements of the  App. It provides stakeholders, including developers, testers, project managers, and end-users, with a clear understanding of the system.
+This document serves as a comprehensive guide to understanding the functional and non-functional requirements of the App. It provides stakeholders, including developers, testers, project managers, and end-users, with a clear understanding of the system.
 
 ### 1.2 Overview of the System
 
@@ -72,6 +72,7 @@ The users of the Indoor Navigator App can be categorized into the following clas
 3. **Developers**: Software developers involved in the development, testing, and maintenance of the app.
 
 ### 2.4 Operating Environment
+
 <!--  the hardware, software, and network requirements necessary for the mobile device to function properly. -->
 
 #### 4.2.1 Hardware Requirements:
@@ -110,7 +111,7 @@ The users of the Indoor Navigator App can be categorized into the following clas
 
 #### 3.1.3 Positioning
 
--   The system will use  trilateration algorithms to determine the user's position indoors.Positioning accuracy will be within [accuracy threshold at most 2 meters].
+-   The system will use trilateration algorithms to determine the user's position indoors.Positioning accuracy will be within [accuracy threshold at most 2 meters].
 
 #### 3.1.4 Navigation
 
@@ -137,15 +138,15 @@ The users of the Indoor Navigator App can be categorized into the following clas
 
 #### 3.3.1 User Interface (UI):
 
-<img src="https://images.squarespace-cdn.com/content/v1/5ca8e7d816b6407a87e3163a/1558543828012-M97B0FB82LQLC5MYX92V/ke17ZwdGBToddI8pDm48kKzGbY0oME9ouJ0IUEr4f20UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8GRo6ASst2s6pLvNAu_PZdJA-hHPFKvWHM3688Ee3tjIGpg4i4-DSo1vDM_m1SqPKAwpsUYmsQGs1E3mDO6URUk/maps.jpg" alt="" width="300" height="400">
-<img src="https://images.squarespace-cdn.com/content/v1/5ca8e7d816b6407a87e3163a/1558543828012-M97B0FB82LQLC5MYX92V/ke17ZwdGBToddI8pDm48kKzGbY0oME9ouJ0IUEr4f20UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8GRo6ASst2s6pLvNAu_PZdJA-hHPFKvWHM3688Ee3tjIGpg4i4-DSo1vDM_m1SqPKAwpsUYmsQGs1E3mDO6URUk/maps.jpg" alt="" width="300" height="400">
-<img src="https://images.squarespace-cdn.com/content/v1/5ca8e7d816b6407a87e3163a/1558543828012-M97B0FB82LQLC5MYX92V/ke17ZwdGBToddI8pDm48kKzGbY0oME9ouJ0IUEr4f20UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8GRo6ASst2s6pLvNAu_PZdJA-hHPFKvWHM3688Ee3tjIGpg4i4-DSo1vDM_m1SqPKAwpsUYmsQGs1E3mDO6URUk/maps.jpg" alt="" width="300" height="400">
-
-
+<div style="display: flex; justify-content: space-between; ">
+    <img src="https://images.squarespace-cdn.com/content/v1/5ca8e7d816b6407a87e3163a/1558543828012-M97B0FB82LQLC5MYX92V/ke17ZwdGBToddI8pDm48kKzGbY0oME9ouJ0IUEr4f20UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8GRo6ASst2s6pLvNAu_PZdJA-hHPFKvWHM3688Ee3tjIGpg4i4-DSo1vDM_m1SqPKAwpsUYmsQGs1E3mDO6URUk/maps.jpg" alt="" width="300" height="400" style="margin-right: 10px;">
+    <img src="https://images.squarespace-cdn.com/content/v1/5ca8e7d816b6407a87e3163a/1558543828012-M97B0FB82LQLC5MYX92V/ke17ZwdGBToddI8pDm48kKzGbY0oME9ouJ0IUEr4f20UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8GRo6ASst2s6pLvNAu_PZdJA-hHPFKvWHM3688Ee3tjIGpg4i4-DSo1vDM_m1SqPKAwpsUYmsQGs1E3mDO6URUk/maps.jpg" alt="" width="300" height="400" style="margin-right: 10px;">
+    <img src="https://images.squarespace-cdn.com/content/v1/5ca8e7d816b6407a87e3163a/1558543828012-M97B0FB82LQLC5MYX92V/ke17ZwdGBToddI8pDm48kKzGbY0oME9ouJ0IUEr4f20UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8GRo6ASst2s6pLvNAu_PZdJA-hHPFKvWHM3688Ee3tjIGpg4i4-DSo1vDM_m1SqPKAwpsUYmsQGs1E3mDO6URUk/maps.jpg" alt="" width="300" height="400">
+</div>
 
 #### 3.3.2 Hardware Interfaces:
 
- write how the system will interact with the hardware devices (wifi access points, sensors of mobile device 
+write how the system will interact with the hardware devices (wifi access points), sensors of mobile device
 
 ## 4. Use Cases <a name="use-cases"></a>
 
@@ -175,9 +176,12 @@ The users of the Indoor Navigator App can be categorized into the following clas
 
 ## 5. System Models <a name="system-models"></a>
 
-### 5.1 Data Flow Diagram (DFD)
+### 5.1 Context Diagram
+<img src="./images/context digram.png" alt="" width="800" height="300">
 
-### 5.2 Entity-Relationship Diagram (ERD)
+### 5.2 Data Flow Diagram (DFD)
+<img src="./images/DFD.png" alt="" width="1000" height="500">
+
 
 ### 5.3 Sequence Diagram
 
