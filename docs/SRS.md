@@ -201,7 +201,7 @@ write how the system will interact with the hardware devices (wifi access points
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
-    background-color: #999999;
+    background-color: #999999; /* Background color for all cells (darker gray) */
   }
   th {
     font-weight: bold;
@@ -285,6 +285,7 @@ write how the system will interact with the hardware devices (wifi access points
 
 </body>
 </html>
+
 
 
 ## 7. Traceability Matrix <a name="traceability-matrix"></a>
