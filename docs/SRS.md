@@ -186,3 +186,4 @@ write how the system will interact with the hardware devices (wifi access points
 ### 5.3 Sequence Diagram
 
 ## 7. Traceability Matrix <a name="traceability-matrix"></a>
+    1. excel sheet to track tasks to ensure that all requirements are deliverables.
