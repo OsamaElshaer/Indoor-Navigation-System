@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+    title: Indoor Navigation System
+    version: 1.0.0
+
+paths:
+    /api/users/signup:
+        post:
+            summary: Signup
+            description: Register a new user.
+            tags:
+                - Users
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                userName:
+                                    type: string
+                                    example: JohnDoe
+                                email:
+                                    type: string
+                                    example: john.doe@example.com
+                                password:
+                                    type: string
+                                    example: Password@123
+                                passwordConfirmation:
+                                    type: string
+                                    example: Password@123
+            responses:
+                "201":
+                    description: User signed up successfully
+                "422":
+                    description: Validation error
+
+    /api/users/login:
+        post:
+            summary: Login
+            description: Login and return token.
+            tags:
+                - Users
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                userName:
+                                    type: string
+                                    example: JohnDoe
+                                password:
+                                    type: string
+                                    example: Password@123
+            responses:
+                "201":
+                    description: User logged in successfully
+                "422":
+                    description: Validation error
+
+    /api/users/forgetPassword:
+        post:
+            summary: Forget Password
+            description: Send token to user email for confirmation and password reset.
+            tags:
+                - Users
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    example: john.doe@example.com
+            responses:
+                "201":
+                    description: Password reset token sent successfully
+                "422":
+                    description: Validation error
+
+    /api/users/resetPassword/{resetToken}:
+        post:
+            summary: Reset Password
+            description: Reset password after confirming the token validity.
+            tags:
+                - Users
+            parameters:
+                - in: path
+                  name: resetToken
+                  description: Reset token received from email confirmation
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                password:
+                                    type: string
+                                    example: Password@123
+                                passwordConfirmation:
+                                    type: string
+                                    example: Password@123
+            responses:
+                "201":
+                    description: Password reset successfully
+                "422":
+                    description: Validation error
+
+components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
