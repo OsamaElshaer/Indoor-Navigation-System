@@ -1,46 +1,22 @@
-var sqr = function (a) {
-    return Math.pow(a, 2);
-};
-var vector = function (x, y) {
-    return {
-        x: x,
-        y: y,
-    };
-};
-function calculate(beacons) {
-    var j, k, x, y;
-    if (beacons.length < 3) {
-        console.error("Error! Please add at least three beacons!");
-        return vector(0, 0);
-    }
-    k =
-        (sqr(beacons[0].x) +
-            sqr(beacons[0].y) -
-            sqr(beacons[1].x) -
-            sqr(beacons[1].y) -
-            sqr(beacons[0].distance) +
-            sqr(beacons[1].distance)) /
-            (2 * (beacons[0].y - beacons[1].y)) -
-        (sqr(beacons[0].x) +
-            sqr(beacons[0].y) -
-            sqr(beacons[2].x) -
-            sqr(beacons[2].y) -
-            sqr(beacons[0].distance) +
-            sqr(beacons[2].distance)) /
-            (2 * (beacons[0].y - beacons[2].y));
-    j =
-        (beacons[2].x - beacons[0].x) / (beacons[0].y - beacons[2].y) -
-        (beacons[1].x - beacons[0].x) / (beacons[0].y - beacons[1].y);
-    x = k / j;
-    y =
-        ((beacons[1].x - beacons[0].x) / (beacons[0].y - beacons[1].y)) * x +
-        (sqr(beacons[0].x) +
-            sqr(beacons[0].y) -
-            sqr(beacons[1].x) -
-            sqr(beacons[1].y) -
-            sqr(beacons[0].distance) +
-            sqr(beacons[1].distance)) /
-            (2 * (beacons[0].y - beacons[1].y));
-    return vector(x, y);
+function trilateration(beacons) {
+    const [x1, y1, r1] = [beacons[0].x, beacons[0].y, beacons[0].distance];
+    const [x2, y2, r2] = [beacons[1].x, beacons[1].y, beacons[1].distance];
+    const [x3, y3, r3] = [beacons[2].x, beacons[2].y, beacons[2].distance];
+
+    const A1 = 2 * (x2 - x1);
+    const B1 = 2 * (y2 - y1);
+    const C1 = r1 * r1 - r2 * r2 - x1 * x1 + x2 * x2 - y1 * y1 + y2 * y2;
+
+    const A2 = 2 * (x3 - x1);
+    const B2 = 2 * (y3 - y1);
+    const C2 = r1 * r1 - r3 * r3 - x1 * x1 + x3 * x3 - y1 * y1 + y3 * y3;
+
+    let x = (C1 * B2 - C2 * B1) / (A1 * B2 - A2 * B1);
+    let y = (C1 * A2 - C2 * A1) / (B1 * A2 - B2 * A1);
+    x = Number(x.toFixed(2));
+    y = Number(y.toFixed(2));
+
+    return { x, y };
 }
-module.exports = calculate;
+
+module.exports.trilateration = trilateration;

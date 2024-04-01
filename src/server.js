@@ -1,9 +1,9 @@
-const { app } = require("./loaders/app");
+const { httpServer } = require("./loaders/app");
 const { port } = require("./config/env");
 const { logger } = require("./utils/logger");
 const { mongoConnect } = require("./loaders/database");
 mongoConnect();
-const server = app.listen(port, async () => {
+const server = httpServer.listen(port, async () => {
     logger.info("server on running", { port: port });
 });
 process.on("unhandledRejection", (err) => {

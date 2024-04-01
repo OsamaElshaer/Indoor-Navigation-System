@@ -1,4 +1,3 @@
-
 function measureDistance(
     rssi,
     referenceRssi,
@@ -13,7 +12,7 @@ function measureDistance(
             (referenceRssi - rssi - variance) / (10 * pathLossExponent)
         );
 
-    return distance;
+    return Number(distance.toFixed(2));
 }
 
-exports.measureDistance = measureDistance; 
+exports.measureDistance = measureDistance;

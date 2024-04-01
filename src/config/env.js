@@ -1,3 +1,4 @@
+const { constants } = require("crypto");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -12,6 +13,9 @@ const {
     SENDGRID_API_KEY,
     MAILTRAP_USER,
     MAILTRAP_PASS,
+    CONSTANTS_INDOOR_ENVIROMENT,
+    REFERENCE_RSSI,
+    COORDINATES_OF_AP,
 } = process.env;
 module.exports = {
     port: PORT,
@@ -24,4 +28,7 @@ module.exports = {
     sendgridApiKey: SENDGRID_API_KEY,
     mailTrapUser: MAILTRAP_USER,
     mailTrapPass: MAILTRAP_PASS,
+    constantsIndoorenviroment: JSON.parse(CONSTANTS_INDOOR_ENVIROMENT),
+    referenceRssi: JSON.parse(REFERENCE_RSSI),
+    coordinatesOfAP: JSON.parse(COORDINATES_OF_AP),
 };

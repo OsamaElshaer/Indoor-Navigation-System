@@ -1,6 +1,10 @@
 // express
 const express = require("express");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
 const app = express();
+const httpServer = createServer(app);
 
 //npm packges
 const cors = require("cors");
@@ -8,15 +12,23 @@ const helmet = require("helmet");
 const hpp = require("hpp");
 const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
-const jwt = require("jsonwebtoken");
 
 //require from modules
-const { whiteList } = require("../config/env");
+const {
+    whiteList,
+    constantsIndoorenviroment,
+    referenceRssi,
+    coordinatesOfAP,
+} = require("../config/env");
 const { errorHandlerGlobal } = require("../middlewares/errorHandlerGlobal");
 const { notFound404 } = require("../middlewares/notFound404");
 const { logger } = require("../utils/logger");
 const { router } = require("../api/index");
 const swagger = require("../config/swagger");
+const {
+    measureDistance,
+} = require("../algorithms/log-distance/log-distance-model");
+const { trilateration } = require("../algorithms/trilateration/trilateration");
 
 // -----------------------------------------Middleware-----------------------------------------------------------
 
@@ -24,8 +36,6 @@ const swagger = require("../config/swagger");
 app.use(express.json());
 // using the querystring library, which supports parsing simple form submissions. If you need to parse nested objects or arrays from the form data, you can set extended: true to use the qs library instead.
 app.use(express.urlencoded({ extended: true }));
-
-
 
 // cors
 const corsOptions = {
@@ -59,7 +69,42 @@ app.use(morgan("tiny", { stream: loggerStream }));
 swagger(app);
 
 app.use("/api", router);
+const io = new Server(httpServer, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+        credentials: true,
+    },
+});
+io.on("connection", (socket) => {
+    console.log("a user connected");
 
+    socket.on("sendRssiData", (rssiData) => {
+        console.log(rssiData);
+
+        rssiData.forEach((elements) => {
+            const beaconName = Object.keys(elements)[0]; // Get the beacon name
+            const rssi = Object.values(elements)[0]; // Get the RSSI value
+
+            const distance = measureDistance(
+                rssi,
+                referenceRssi[beaconName],
+                constantsIndoorenviroment.REFERENCE_DISTANCE,
+                constantsIndoorenviroment.PATH_LOSS_EXPONENT,
+                constantsIndoorenviroment.VARIANCE
+            );
+
+            coordinatesOfAP[beaconName].d = distance;
+        });
+        const beacons = Object.entries(coordinatesOfAP).map(([key, value]) => ({
+            x: value.x,
+            y: value.y,
+            distance: value.d,
+        }));
+        const position = trilateration(beacons);
+        socket.emit("position", position);
+    });
+});
 
 // ---------------------------------------------------------------------------------------------------------------
 //handling express errors
@@ -69,4 +114,4 @@ app.use(errorHandlerGlobal);
 
 // ---------------------------------------------------------------------------------------------------------------
 
-module.exports = { app: app };
+module.exports = { httpServer: httpServer };

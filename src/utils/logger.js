@@ -74,4 +74,4 @@ class Logger {
     }
 }
 
-module.exports.logger = new Logger("Chatty");
+module.exports.logger = new Logger("Indoor-Navigation");
