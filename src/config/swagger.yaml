@@ -32,6 +32,23 @@ paths:
             responses:
                 "201":
                     description: User signed up successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: User signed up successfully
+                                    data:
+                                        type: object
+                                        properties:
+                                            userId:
+                                                type: string
+                                                example: user123
+                                            status:
+                                                type: boolean
+                                                example: true
                 "422":
                     description: Validation error
 
@@ -57,6 +74,23 @@ paths:
             responses:
                 "201":
                     description: User logged in successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: User logged in
+                                    data:
+                                        type: object
+                                        properties:
+                                            token:
+                                                type: string
+                                                example: your_access_token_here
+                                            status:
+                                                type: boolean
+                                                example: true
                 "422":
                     description: Validation error
 
@@ -79,6 +113,23 @@ paths:
             responses:
                 "201":
                     description: Password reset token sent successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: Check your email to reset your password
+                                    data:
+                                        type: object
+                                        properties:
+                                            sendMail:
+                                                type: boolean
+                                                example: true
+                                            status:
+                                                type: boolean
+                                                example: true
                 "422":
                     description: Validation error
 
@@ -110,9 +161,69 @@ paths:
                                     example: Password@123
             responses:
                 "201":
-                    description: Password reset successfully
+                    description: User reset password successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: User reset password successfully
+                                    data:
+                                        type: object
+                                        properties:
+                                            status:
+                                                type: boolean
+                                                example: true
                 "422":
                     description: Validation error
+
+    /api/navigate:
+        post:
+            security:
+                - bearerAuth: []
+            summary: define user position while movement.
+            description: Open bidirectional communication where the user sends the RSSI of surrounding APs so the server can respond with the X,Y coordinates.
+            tags:
+                - Navigation
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                    AP1:
+                                        type: integer
+                                        description: RSSI value for AP1
+                                        example: -70
+                                    AP2:
+                                        type: integer
+                                        description: RSSI value for AP2
+                                        example: -60
+                                    AP3:
+                                        type: integer
+                                        description: RSSI value for AP3
+                                        example: -55
+            responses:
+                "200":
+                    description: Bidirectional communication established.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    x:
+                                        type: number
+                                        description: X coordinate of the user's position
+                                    y:
+                                        type: number
+                                        description: Y coordinate of the user's position
+                "404":
+                    description: Not found
 
 components:
     securitySchemes:

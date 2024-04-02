@@ -14,21 +14,14 @@ const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
 
 //require from modules
-const {
-    whiteList,
-    constantsIndoorenviroment,
-    referenceRssi,
-    coordinatesOfAP,
-} = require("../config/env");
+const { whiteList } = require("../config/env");
 const { errorHandlerGlobal } = require("../middlewares/errorHandlerGlobal");
 const { notFound404 } = require("../middlewares/notFound404");
 const { logger } = require("../utils/logger");
 const { router } = require("../api/index");
 const swagger = require("../config/swagger");
-const {
-    measureDistance,
-} = require("../algorithms/log-distance/log-distance-model");
-const { trilateration } = require("../algorithms/trilateration/trilateration");
+
+const handelSocketConnection = require("../config/socketIo");
 
 // -----------------------------------------Middleware-----------------------------------------------------------
 
@@ -69,6 +62,7 @@ app.use(morgan("tiny", { stream: loggerStream }));
 swagger(app);
 
 app.use("/api", router);
+
 const io = new Server(httpServer, {
     cors: {
         origin: "*",
@@ -76,35 +70,15 @@ const io = new Server(httpServer, {
         credentials: true,
     },
 });
-io.on("connection", (socket) => {
-    console.log("a user connected");
+const nameSpace = io.of("/api/navigate");
 
-    socket.on("sendRssiData", (rssiData) => {
-        console.log(rssiData);
-
-        rssiData.forEach((elements) => {
-            const beaconName = Object.keys(elements)[0]; // Get the beacon name
-            const rssi = Object.values(elements)[0]; // Get the RSSI value
-
-            const distance = measureDistance(
-                rssi,
-                referenceRssi[beaconName],
-                constantsIndoorenviroment.REFERENCE_DISTANCE,
-                constantsIndoorenviroment.PATH_LOSS_EXPONENT,
-                constantsIndoorenviroment.VARIANCE
-            );
-
-            coordinatesOfAP[beaconName].d = distance;
-        });
-        const beacons = Object.entries(coordinatesOfAP).map(([key, value]) => ({
-            x: value.x,
-            y: value.y,
-            distance: value.d,
-        }));
-        const position = trilateration(beacons);
-        socket.emit("position", position);
+nameSpace
+    // .use(async (socket, next) => {
+    //     isAuthSocket(socket, next);
+    // })
+    .on("connection", (socket) => {
+        handelSocketConnection(socket, nameSpace);
     });
-});
 
 // ---------------------------------------------------------------------------------------------------------------
 //handling express errors
