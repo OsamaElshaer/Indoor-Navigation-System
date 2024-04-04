@@ -192,25 +192,66 @@ paths:
                 content:
                     application/json:
                         schema:
-                            type: array
-                            items:
-                                type: object
-                                properties:
-                                    AP1:
-                                        type: integer
-                                        description: RSSI value for AP1
-                                        example: -70
-                                    AP2:
-                                        type: integer
-                                        description: RSSI value for AP2
-                                        example: -60
-                                    AP3:
-                                        type: integer
-                                        description: RSSI value for AP3
-                                        example: -55
+                            type: object
+                            properties:
+                                AP1:
+                                    type: integer
+                                    description: RSSI value for AP1
+                                    example: -70
+                                AP2:
+                                    type: integer
+                                    description: RSSI value for AP2
+                                    example: -60
+                                AP3:
+                                    type: integer
+                                    description: RSSI value for AP3
+                                    example: -55
             responses:
                 "200":
                     description: Bidirectional communication established.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    x:
+                                        type: number
+                                        description: X coordinate of the user's position
+                                    y:
+                                        type: number
+                                        description: Y coordinate of the user's position
+                "404":
+                    description: Not found
+    /api/navigate/positioning:
+        post:
+            security:
+                - bearerAuth: []
+            summary: define user position .
+            description: user sends the RSSI of surrounding APs so the server can respond with the X,Y coordinates.
+            tags:
+                - Navigation
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                AP1:
+                                    type: integer
+                                    description: RSSI value for AP1
+                                    example: -70
+                                AP2:
+                                    type: integer
+                                    description: RSSI value for AP2
+                                    example: -60
+                                AP3:
+                                    type: integer
+                                    description: RSSI value for AP3
+                                    example: -55
+            responses:
+                "200":
+                    description: response with position of user x,y.
                     content:
                         application/json:
                             schema:

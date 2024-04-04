@@ -6,7 +6,7 @@ The log-distance path loss model, is a model used in wireless communication syst
 
 This model says that when a signal travels a certain distance, its power gets weaker. It's like starting with a certain amount of energy, and as you go further away, you lose some of that energy. The rate at which you lose this energy follows a logarithmic pattern, meaning it decreases gradually, not linearly. The exponent, represented by 'n', controls how fast the signal weakens with distance. Additionally, variance helps account for random fluctuations or obstacles in the environment that can further weaken the signal, like shadows from buildings or walls.
 
-![alt text](OIP.jpg)
+![alt text](../images/OIP.jpg)
 
 ### Equation
 

@@ -15,4 +15,4 @@ function measureDistance(
     return Number(distance.toFixed(2));
 }
 
-exports.measureDistance = measureDistance;
+module.exports.measureDistance = measureDistance;

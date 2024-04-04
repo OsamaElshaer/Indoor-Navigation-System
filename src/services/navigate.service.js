@@ -7,13 +7,9 @@ const {
     referenceRssi,
     coordinatesOfAP,
 } = require("../config/env");
-
-const handelSocketConnection = function (socket, io) {
-    console.log("a user connected");
-
-    socket.on("sendRssiData", (beaconsData) => {
-        console.log(beaconsData);
-
+const positioning = (req, res, next) => {
+    try {
+        const beaconsData = req.body;
         for (const beaconName in beaconsData) {
             if (beaconsData.hasOwnProperty(beaconName)) {
                 const rssi = beaconsData[beaconName]; // Get the RSSI value
@@ -36,8 +32,13 @@ const handelSocketConnection = function (socket, io) {
             distance: value.d,
         }));
         const position = trilateration(beacons);
-        socket.emit("position", position);
-    });
+        return res.status(200).json({
+            msg: "positioning success",
+            data: { position: position, status: true },
+        });
+    } catch (error) {
+        next(error);
+    }
 };
 
-module.exports = handelSocketConnection;
+module.exports.positioning = positioning;
