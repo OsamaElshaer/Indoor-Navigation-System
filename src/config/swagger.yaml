@@ -267,7 +267,7 @@ paths:
                 "404":
                     description: Not found
 
-    /access-points:
+    /api/access-points:
         post:
             summary: Add a new access point
             tags:
@@ -352,7 +352,7 @@ paths:
                                                             description: The Z coordinate of the access point
                                                             example: 70
 
-    /access-points/{id}:
+    /api/access-points/{id}:
         get:
             summary: Found Access Point
             tags:
