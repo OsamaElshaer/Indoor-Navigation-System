@@ -37,6 +37,7 @@ class UserModel extends UserModelAbstract {
         const result = await db
             .collection("users")
             .updateOne({ _id: userId }, { $set: updatedUserData });
+
         return result;
     };
 }

@@ -7,7 +7,7 @@ const {
     validateLogin,
     valiadteforgetPassword,
     validateResetPassword,
-} = require("../../utils/validations");
+} = require("../../utils/validations/user.validation");
 
 const userModel = new UserModel();
 const userService = new AuthService(userModel);

@@ -183,7 +183,7 @@ paths:
         post:
             security:
                 - bearerAuth: []
-            summary: define user position while movement.
+            summary: Define user position while movement.
             description: Open bidirectional communication where the user sends the RSSI of surrounding APs so the server can respond with the X,Y coordinates.
             tags:
                 - Navigation
@@ -222,12 +222,13 @@ paths:
                                         description: Y coordinate of the user's position
                 "404":
                     description: Not found
+
     /api/navigate/positioning:
         post:
             security:
                 - bearerAuth: []
-            summary: define user position .
-            description: user sends the RSSI of surrounding APs so the server can respond with the X,Y coordinates.
+            summary: Define user position.
+            description: User sends the RSSI of surrounding APs so the server can respond with the X,Y coordinates.
             tags:
                 - Navigation
             requestBody:
@@ -251,7 +252,7 @@ paths:
                                     example: -55
             responses:
                 "200":
-                    description: response with position of user x,y.
+                    description: Response with position of user x,y.
                     content:
                         application/json:
                             schema:
@@ -265,6 +266,189 @@ paths:
                                         description: Y coordinate of the user's position
                 "404":
                     description: Not found
+
+    /access-points:
+        post:
+            summary: Add a new access point
+            tags:
+                - Access Points
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                coordinates:
+                                    type: object
+                                    properties:
+                                        x:
+                                            type: number
+                                        y:
+                                            type: number
+                                        z:
+                                            type: number
+            responses:
+                "201":
+                    description: New access point added
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                    data:
+                                        type: object
+                                        properties:
+                                            acknowledged:
+                                                type: boolean
+                                            insertedId:
+                                                type: string
+
+        get:
+            summary: Get all access points
+            tags:
+                - Access Points
+            responses:
+                "200":
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: "all access points data"
+                                    data:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                _id:
+                                                    type: string
+                                                    description: The unique identifier of the access point
+                                                    example: "66105f039fd3057ca9f6f487"
+                                                name:
+                                                    type: string
+                                                    description: The name of the access point
+                                                    example: "AP2"
+                                                coordinates:
+                                                    type: object
+                                                    properties:
+                                                        x:
+                                                            type: number
+                                                            description: The X coordinate of the access point
+                                                            example: 100
+                                                        y:
+                                                            type: number
+                                                            description: The Y coordinate of the access point
+                                                            example: 50
+                                                        z:
+                                                            type: number
+                                                            description: The Z coordinate of the access point
+                                                            example: 70
+
+    /access-points/{id}:
+        get:
+            summary: Found Access Point
+            tags:
+                - Access Points
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  description: ID of the access point to retrieve
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                    data:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                _id:
+                                                    type: string
+                                                    description: The unique identifier of the access point
+                                                    example: "66105f039fd3057ca9f6f487"
+                                                name:
+                                                    type: string
+                                                    description: The name of the access point
+                                                    example: "AP2"
+                                                coordinates:
+                                                    type: object
+                                                    properties:
+                                                        x:
+                                                            type: number
+                                                            description: The X coordinate of the access point
+                                                            example: 100
+                                                        y:
+                                                            type: number
+                                                            description: The Y coordinate of the access point
+                                                            example: 50
+                                                        z:
+                                                            type: number
+                                                            description: The Z coordinate of the access point
+                                                            example: 70
+
+        put:
+            summary: Update access point by ID
+            tags:
+                - Access Points
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  description: ID of the access point to update
+                  schema:
+                      type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                coordinates:
+                                    type: object
+                                    properties:
+                                        x:
+                                            type: number
+                                        y:
+                                            type: number
+                                        z:
+                                            type: number
+            responses:
+                "201":
+                    description: Access point has been successfully updated
+        delete:
+            summary: Delete access point by ID
+            tags:
+                - Access Points
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  description: ID of the access point to delete
+                  schema:
+                      type: string
+            responses:
+                "204":
+                    description: Access point has been deleted
 
 components:
     securitySchemes:

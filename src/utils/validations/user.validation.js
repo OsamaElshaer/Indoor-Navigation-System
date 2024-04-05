@@ -1,6 +1,6 @@
 const { body, param } = require("express-validator");
 const bcrypt = require("bcrypt");
-const { UserModel } = require("../models/user.model");
+const { UserModel } = require("../../models/user.model");
 const userModel = new UserModel();
 
 exports.validateSignup = [
