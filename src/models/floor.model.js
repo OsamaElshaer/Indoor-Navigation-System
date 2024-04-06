@@ -1,7 +1,7 @@
 const { getDb } = require("../loaders/database");
 const { ObjectId } = require("mongodb");
 
-class AccessPOintModelAbstract {
+class FloorModelAbstract {
     add(obj) {
         throw new Error("add method must be implemented in derived classes");
     }
@@ -18,37 +18,41 @@ class AccessPOintModelAbstract {
     }
 }
 
-class AccessPointModel extends AccessPOintModelAbstract {
+class FloorModel extends FloorModelAbstract {
     add(obj) {
         const db = getDb();
-        const result = db.collection("accessPoints").insertOne(obj);
+        console.log(obj);
+        const result = db.collection("floorPlans").insertOne(obj);
         return result;
     }
     find(key, value) {
         const query = { [key]: new ObjectId(value) };
-        const AP = getDb().collection("accessPoints").findOne(query);
+        const result = getDb().collection("floorPlans").findOne(query);
 
-        return AP;
+        return result;
     }
     findAll() {
-        const cursor = getDb().collection("accessPoints").find();
+        const cursor = getDb().collection("floorPlans").find();
         return cursor.toArray();
     }
 
-    update(APId, updatedAPData) {
+    update(floorPlan, updatedFloorPlan) {
         const db = getDb();
         const result = db
-            .collection("accessPoints")
-            .updateOne({ _id: new ObjectId(APId) }, { $set: updatedAPData });
+            .collection("floorPlans")
+            .updateOne(
+                { _id: new ObjectId(floorPlan) },
+                { $set: updatedFloorPlan }
+            );
         return result;
     }
-    remove(id) {
-        const db = getDb();
-        const result = db
-            .collection("accessPoints")
+    async remove(id) {
+        const db = await getDb();
+        const result = await db
+            .collection("floorPlans")
             .deleteOne({ _id: new ObjectId(id) });
         return result;
     }
 }
 
-module.exports.AccessPointModel = AccessPointModel;
+module.exports.FloorModel = FloorModel;

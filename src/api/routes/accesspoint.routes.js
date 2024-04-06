@@ -19,7 +19,7 @@ const { add, find, update, remove, findAll } = APserviseObj;
 router.post("/add", addAPvalidation, add);
 router.get("/find/:key", findAPvalidation, find);
 router.get("/findAll", findAll);
-router.post("/update", UpdateAPvalidation, update);
+router.put("/update", UpdateAPvalidation, update);
 router.delete("/delete/:_id", deleteValidator, remove);
 
 module.exports.accessPointRouter = router;

@@ -267,7 +267,7 @@ paths:
                 "404":
                     description: Not found
 
-    /api/access-points:
+    /api/accessPoints/add:
         post:
             summary: Add a new access point
             tags:
@@ -308,6 +308,7 @@ paths:
                                             insertedId:
                                                 type: string
 
+    /api/accessPoints/findAll:
         get:
             summary: Get all access points
             tags:
@@ -352,7 +353,7 @@ paths:
                                                             description: The Z coordinate of the access point
                                                             example: 70
 
-    /api/access-points/{id}:
+    /api/accessPoints/find/{id}:
         get:
             summary: Found Access Point
             tags:
@@ -403,17 +404,11 @@ paths:
                                                             description: The Z coordinate of the access point
                                                             example: 70
 
+    /api/accessPoints/update:
         put:
             summary: Update access point by ID
             tags:
                 - Access Points
-            parameters:
-                - in: path
-                  name: id
-                  required: true
-                  description: ID of the access point to update
-                  schema:
-                      type: string
             requestBody:
                 required: true
                 content:
@@ -421,6 +416,9 @@ paths:
                         schema:
                             type: object
                             properties:
+                                _id:
+                                    type: string
+                                    example: "66105f039fd3057ca9f6f487"
                                 name:
                                     type: string
                                 coordinates:
@@ -435,6 +433,8 @@ paths:
             responses:
                 "201":
                     description: Access point has been successfully updated
+
+    /api/accessPoints/delete/{id}:
         delete:
             summary: Delete access point by ID
             tags:
@@ -449,6 +449,197 @@ paths:
             responses:
                 "204":
                     description: Access point has been deleted
+
+    /api/floors/add:
+        post:
+            summary: Add a new floor plan
+            tags:
+                - Floor Plans
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                floorPlan:
+                                    type: object
+                                    properties:
+                                        name:
+                                            type: string
+                                            example: "level one"
+                                        features:
+                                            type: array
+                                            items:
+                                                type: object
+                                                properties:
+                                                    type:
+                                                        type: string
+                                                        example: "Feature"
+                                                    properties:
+                                                        type: object
+                                                        properties:
+                                                            name:
+                                                                type: string
+                                                            geometry:
+                                                                type: object
+                                                                properties:
+                                                                    type:
+                                                                        type: string
+                                                                    coordinates:
+                                                                        type: array
+                                                                        items:
+                                                                            type: number
+            responses:
+                "201":
+                    description: New Floor Plan added
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: "New Floor Plan added successfully"
+                                    data:
+                                        type: object
+                                        properties:
+                                            acknowledged:
+                                                type: boolean
+                                            insertedId:
+                                                type: string
+
+    /api/floors/findAll:
+        get:
+            summary: Get all floor plans
+            tags:
+                - Floor Plans
+            responses:
+                "200":
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: "All floor plans data"
+                                    data:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                _id:
+                                                    type: string
+                                                    description: The unique identifier of the floor plan
+                                                    example: "66105f039fd3057ca9f6f487"
+                                                name:
+                                                    type: string
+                                                    description: The name of the floor plan
+                                                    example: "level one"
+                                                features:
+                                                    type: array
+                                                    items:
+                                                        type: object
+
+    /api/floors/find/{id}:
+        get:
+            summary: Find Floor Plan by ID
+            tags:
+                - Floor Plans
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  description: ID of the Floor Plan to retrieve
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: "Floor Plan found"
+                                    data:
+                                        type: object
+                                        properties:
+                                            _id:
+                                                type: string
+                                                description: The unique identifier of the floor plan
+                                                example: "66105f039fd3057ca9f6f487"
+                                            name:
+                                                type: string
+                                                description: The name of the floor plan
+                                                example: "level one"
+                                            features:
+                                                type: array
+                                                items:
+                                                    type: object
+
+    /api/floors/update:
+        put:
+            summary: Update Floor Plan by ID
+            tags:
+                - Floor Plans
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                _id:
+                                    type: string
+                                    example: "66105f039fd3057ca9f6f487"
+                                name:
+                                    type: string
+                                features:
+                                    type: array
+                                    items:
+                                        type: object
+                                        properties:
+                                            type:
+                                                type: string
+                                                example: "Feature"
+                                            properties:
+                                                type: object
+                                                properties:
+                                                    name:
+                                                        type: string
+                                                    geometry:
+                                                        type: object
+                                                        properties:
+                                                            type:
+                                                                type: string
+                                                            coordinates:
+                                                                type: array
+                                                                items:
+                                                                    type: number
+            responses:
+                "201":
+                    description: Floor Plan has been successfully updated
+
+    /api/floors/delete/{id}:
+        delete:
+            summary: Delete Floor Plan by ID
+            tags:
+                - Floor Plans
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  description: ID of the Floor Plan to delete
+                  schema:
+                      type: string
+            responses:
+                "204":
+                    description: Floor Plan has been deleted
 
 components:
     securitySchemes:
