@@ -27,3 +27,6 @@ i should deal with those as variable so i simplify it as more as possible which 
 finally we can derive this math principle
 
 ![image](../images/46822482-99c835f29722d77bfcb6f5649e3a797a.png)
+
+
+any idea for make it **3D** 
