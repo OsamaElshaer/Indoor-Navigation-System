@@ -21,7 +21,6 @@ class FloorModelAbstract {
 class FloorModel extends FloorModelAbstract {
     add(obj) {
         const db = getDb();
-        console.log(obj);
         const result = db.collection("floorPlans").insertOne(obj);
         return result;
     }

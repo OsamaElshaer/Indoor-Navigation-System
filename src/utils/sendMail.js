@@ -34,7 +34,6 @@ exports.sendMail = async (emailTo, subject, html) => {
         }
 
         const res = await transporter.sendMail(mailOptions);
-        console.log(res)
         return true;
     } catch (error) {
         logger.warn("Error sending email:", { error: error.message });
