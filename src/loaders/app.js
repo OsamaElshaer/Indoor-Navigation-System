@@ -5,6 +5,8 @@ const { Server } = require("socket.io");
 
 const app = express();
 const httpServer = createServer(app);
+const http = require("http");
+
 
 //npm packges
 const cors = require("cors");
@@ -14,7 +16,7 @@ const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
 
 //require from modules
-const { whiteList } = require("../config/env");
+const { whiteList, port } = require("../config/env");
 const { errorHandlerGlobal } = require("../middlewares/errorHandlerGlobal");
 const { notFound404 } = require("../middlewares/notFound404");
 const { logger } = require("../utils/logger");
@@ -44,8 +46,8 @@ app.use(helmet());
 
 //limit requests rate
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, 
-    max: 100, 
+    windowMs: 15 * 60 * 1000,
+    max: 100,
     message: "Too many requests from this IP, please try again after an 15 min",
 });
 // app.use(limiter);
@@ -81,8 +83,42 @@ nameSpace
     });
 
 // ---------------------------------------------------------------------------------------------------------------
+
+// keep alive endpoint
+
+app.get("/keep-alive", (req, res) => {
+    res.status(200).send("Server is alive");
+});
+
+function keepServerAlive() {
+    const options = {
+        hostname: "indoor-navigation-system.onrender.com",
+        port: port,
+        path: "/keep-alive",
+        method: "GET",
+    };
+
+    const req = http.request(options, (res) => {
+        console.log(`Keep-alive request status: ${res.statusCode}`);
+    });
+
+    req.on("error", (error) => {
+        console.error("Error making keep-alive request:", error);
+    });
+
+    req.end();
+}
+
+const interval = setInterval(keepServerAlive, 10 * 60 * 1000);
+// ---------------------------------------------------------------------------------------------------------------
+
+
+
+
 //handling express errors
+
 app.all("*", notFound404);
+
 
 app.use(errorHandlerGlobal);
 

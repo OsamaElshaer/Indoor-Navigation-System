@@ -8,7 +8,6 @@ class FloorService {
     create = async (req, res, next) => {
         try {
             const { floorPlan } = req.body;
-            console.log(floorPlan);
 
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -87,7 +86,6 @@ class FloorService {
             }
 
             const result = await this.floorModel.remove(_id);
-            console.log(result);
             return res.json({
                 msg: "floor plan has been deleted",
                 data: result,
