@@ -16,6 +16,7 @@ const {
     CONSTANTS_INDOOR_ENVIROMENT,
     REFERENCE_RSSI,
     COORDINATES_OF_AP,
+    SERVER_URL,
 } = process.env;
 module.exports = {
     port: PORT,
@@ -31,4 +32,5 @@ module.exports = {
     constantsIndoorenviroment: JSON.parse(CONSTANTS_INDOOR_ENVIROMENT),
     referenceRssi: JSON.parse(REFERENCE_RSSI),
     coordinatesOfAP: JSON.parse(COORDINATES_OF_AP),
+    serverUrl: SERVER_URL,
 };
