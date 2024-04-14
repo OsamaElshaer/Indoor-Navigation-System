@@ -10,6 +10,7 @@ const {
 const positioning = (req, res, next) => {
     try {
         const beaconsData = req.body;
+        console.log(beaconsData);
         for (const beaconName in beaconsData) {
             if (beaconsData.hasOwnProperty(beaconName)) {
                 const rssi = beaconsData[beaconName]; // Get the RSSI value
