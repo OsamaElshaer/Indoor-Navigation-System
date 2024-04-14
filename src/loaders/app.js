@@ -5,8 +5,7 @@ const { Server } = require("socket.io");
 
 const app = express();
 const httpServer = createServer(app);
-const http = require("http");
-
+const https = require("https");
 
 //npm packges
 const cors = require("cors");
@@ -16,7 +15,7 @@ const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
 
 //require from modules
-const { whiteList, port } = require("../config/env");
+const { whiteList, serverUrl } = require("../config/env");
 const { errorHandlerGlobal } = require("../middlewares/errorHandlerGlobal");
 const { notFound404 } = require("../middlewares/notFound404");
 const { logger } = require("../utils/logger");
@@ -85,21 +84,28 @@ nameSpace
 // ---------------------------------------------------------------------------------------------------------------
 
 // keep alive endpoint
-
-app.get("/keep-alive", (req, res) => {
-    res.status(200).send("Server is alive");
+app.get("/keep-alive", (req, res, next) => {
+    res.send("server is alive");
 });
 
-function keepServerAlive() {
-    const options = {
-        hostname: "indoor-navigation-system.onrender.com",
-        port: port,
-        path: "/keep-alive",
-        method: "GET",
-    };
+function keepServerAlive(serverHost) {
+    const options = new URL(serverHost);
 
-    const req = http.request(options, (res) => {
-        console.log(`Keep-alive request status: ${res.statusCode}`);
+    const req = https.request(options, (res) => {
+        if (
+            res.statusCode === 301 ||
+            res.statusCode === 302 ||
+            res.statusCode === 307 ||
+            res.statusCode === 308
+        ) {
+            const newLocation = res.headers.location;
+            console.log(
+                `Received ${res.statusCode} Redirect to: ${newLocation}`
+            );
+            keepServerAlive(newLocation);
+        } else {
+            console.log(`Keep-alive request status: ${res.statusCode}`);
+        }
     });
 
     req.on("error", (error) => {
@@ -109,16 +115,14 @@ function keepServerAlive() {
     req.end();
 }
 
-const interval = setInterval(keepServerAlive, 10 * 60 * 1000);
+const interval = setInterval(() => {
+    keepServerAlive(serverUrl);
+}, 10 * 60 * 1000);
 // ---------------------------------------------------------------------------------------------------------------
-
-
-
 
 //handling express errors
 
 app.all("*", notFound404);
-
 
 app.use(errorHandlerGlobal);
 
