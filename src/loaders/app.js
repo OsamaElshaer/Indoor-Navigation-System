@@ -49,7 +49,7 @@ const limiter = rateLimit({
     max: 100,
     message: "Too many requests from this IP, please try again after an 15 min",
 });
-// app.use(limiter);
+app.use(limiter);
 
 //logging
 let loggerStream = {
@@ -117,7 +117,7 @@ function keepServerAlive(serverHost) {
 
 const interval = setInterval(() => {
     keepServerAlive(serverUrl);
-}, 10 * 60 * 1000);
+}, 6e5);
 // ---------------------------------------------------------------------------------------------------------------
 
 //handling express errors

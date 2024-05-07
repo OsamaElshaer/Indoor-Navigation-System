@@ -4,12 +4,12 @@ info:
     version: 1.0.0
 
 paths:
-    /api/users/signup:
+    /api/organizations/signup:
         post:
-            summary: Signup
-            description: Register a new user.
+            summary: Organization Signup
+            description: Register a new organization.
             tags:
-                - Users
+                - Organizations
             requestBody:
                 required: true
                 content:
@@ -17,21 +17,39 @@ paths:
                         schema:
                             type: object
                             properties:
-                                userName:
-                                    type: string
-                                    example: JohnDoe
-                                email:
-                                    type: string
-                                    example: john.doe@example.com
-                                password:
-                                    type: string
-                                    example: Password@123
-                                passwordConfirmation:
-                                    type: string
-                                    example: Password@123
+                                organizationData:
+                                    type: object
+                                    properties:
+                                        organizationName:
+                                            type: string
+                                            example: Acme Corporation
+                                        contactEmail:
+                                            type: string
+                                            example: contact@acme.com
+                                        contactPhone:
+                                            type: string
+                                            example: 123-456-7890
+                                        adminName:
+                                            type: string
+                                            example: John Doe
+                                        adminEmail:
+                                            type: string
+                                            example: john.doe@acme.com
+                                        adminPhone:
+                                            type: string
+                                            example: 987-654-3210
+                                        userName:
+                                            type: string
+                                            example: acmeadmin
+                                        password:
+                                            type: string
+                                            example: S@ecurepassword123
+                                        organizationType:
+                                            type: string
+                                            example: Business
             responses:
                 "201":
-                    description: User signed up successfully
+                    description: Organization signed up successfully
                     content:
                         application/json:
                             schema:
@@ -39,25 +57,25 @@ paths:
                                 properties:
                                     msg:
                                         type: string
-                                        example: User signed up successfully
+                                        example: Organization signed up successfully
                                     data:
                                         type: object
                                         properties:
-                                            userId:
+                                            organizationId:
                                                 type: string
-                                                example: user123
+                                                example: org123
                                             status:
                                                 type: boolean
                                                 example: true
                 "422":
                     description: Validation error
 
-    /api/users/login:
+    /api/organizations/login:
         post:
             summary: Login
             description: Login and return token.
             tags:
-                - Users
+                - Organizations
             requestBody:
                 required: true
                 content:
@@ -67,10 +85,10 @@ paths:
                             properties:
                                 userName:
                                     type: string
-                                    example: JohnDoe
+                                    example: acmeadmin
                                 password:
                                     type: string
-                                    example: Password@123
+                                    example: S@ecurepassword123
             responses:
                 "201":
                     description: User logged in successfully
@@ -94,12 +112,12 @@ paths:
                 "422":
                     description: Validation error
 
-    /api/users/forgetPassword:
+    /api/organizations/forgetPassword:
         post:
             summary: Forget Password
             description: Send token to user email for confirmation and password reset.
             tags:
-                - Users
+                - Organizations
             requestBody:
                 required: true
                 content:
@@ -133,12 +151,12 @@ paths:
                 "422":
                     description: Validation error
 
-    /api/users/resetPassword/{resetToken}:
+    /api/organizations/resetPassword/{resetToken}:
         post:
             summary: Reset Password
             description: Reset password after confirming the token validity.
             tags:
-                - Users
+                - Organizations
             parameters:
                 - in: path
                   name: resetToken
