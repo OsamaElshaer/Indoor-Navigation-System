@@ -25,6 +25,18 @@ where:
 -   **n** is the path loss exponent, representing how quickly the signal strength attenuates with distance.
 -   **X** is the variance, representing the variability in RSSI measurements due to environmental factors such as obstacles, reflections, and interference.
 
+𝑛 Determines the rate of signal attenuation with distance 
+𝑑 (path loss exponent).
+<br>
+<br>
+𝑋 Represents the variability in RSSI measurements due to environmental factors beyond path loss, such as multipath propagation, fading, and interference.
+
+𝑛
+directly influences the rate (in dB per meter) at which the signal strength diminishes as the distance from the transmitter increases. It's an essential parameter for understanding and predicting wireless signal behavior over varying distances and environments.
+
+
+
+
 <br>
 <br>
 <br>

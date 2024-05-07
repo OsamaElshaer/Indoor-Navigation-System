@@ -12,44 +12,51 @@ const {
 } = require("../utils/mailMessages");
 
 class AuthService {
-    constructor(userModel) {
-        this.userModel = userModel;
+    constructor(organizationModel) {
+        this.organizationModel = organizationModel;
     }
+
     signUp = async (req, res, next) => {
         try {
-            const { userName, email, password } = req.body;
+            const { organizationData } = req.body;
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 throw new CustomError("signup", 422, errors.array()[0].msg);
             }
-            const hashedPassword = await bcrypt.hash(password, 12);
-            const userId = await this.userModel.create(
-                userName,
-                email,
-                hashedPassword
-            );
-            //send mail
-            const subject = "Welcome to Our Application!";
-            const html = signUpTemplate(userName);
 
-            sendMail(email, subject, html);
+            const hashedPassword = await bcrypt.hash(
+                organizationData.password,
+                12
+            );
+
+            organizationData.password = hashedPassword;
+
+            const organizationId = await this.organizationModel.create(
+                organizationData
+            );
+
+            const subject = "Welcome to Our Application!";
+            const html = signUpTemplate(organizationData.adminName);
+
+            sendMail(organizationData.adminEmail, subject, html);
 
             audit(
-                "User",
+                "Organization",
                 "Signup",
-                userName,
-
+                organizationData.userName,
                 req.method,
                 res.statusCode
             );
+
             return res.status(201).json({
-                msg: "User signed up successfully",
-                data: { userId: userId, status: true },
+                msg: "Organization signed up successfully",
+                data: { organizationId, status: true },
             });
         } catch (error) {
             next(error);
         }
     };
+
     login = async (req, res, next) => {
         try {
             const user = req.user;
@@ -62,7 +69,13 @@ class AuthService {
             const token = jwt.sign(payload, env.jwtSecretKey, {
                 expiresIn: "24h",
             });
-            audit("User", "Login", user.userName, req.method, res.statusCode);
+            audit(
+                "organization",
+                "Login",
+                user.userName,
+                req.method,
+                res.statusCode
+            );
             return res.status(201).json({
                 msg: "user logged in ",
                 data: { token: token, status: true },
@@ -71,6 +84,7 @@ class AuthService {
             next(error);
         }
     };
+
     forgetPassword = async (req, res, next) => {
         try {
             const errors = validationResult(req);
@@ -103,14 +117,14 @@ class AuthService {
             const user = req.user;
             user.token = { resetToken, resestTokenExpire, passwordResetCount };
 
-            await this.userModel.update(user._id, user);
+            await this.organizationModel.update(user._id, user);
 
             const subject = "Forget Password";
             const html = forgetPasswordTemplate(resetToken);
-            const sendMailRes = await sendMail(user.email, subject, html);
+            const sendMailRes = await sendMail(user.adminEmail, subject, html);
 
             audit(
-                "User",
+                "organization",
                 "forget password",
                 user.userName,
                 req.method,
@@ -143,7 +157,7 @@ class AuthService {
             const hashPassword = await bcrypt.hash(password, 12);
             user.password = hashPassword;
             user.token.passwordResetCount++;
-            await this.userModel.update(user._id, user);
+            await this.organizationModel.update(user._id, user);
             audit(
                 "User",
                 "reset password",

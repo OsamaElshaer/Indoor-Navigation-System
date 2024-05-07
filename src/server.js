@@ -6,19 +6,19 @@ const { mongoConnect } = require("./loaders/database");
 const cluster = require("cluster");
 const numCPUs = require("os").cpus().length;
 
-if (cluster.isMaster) {
-    console.log(`Master ${process.pid} is running`);
+// if (cluster.isMaster) {
+//     console.log(`Master ${process.pid} is running`);
 
-    for (let i = 0; i < numCPUs; i++) {
-        cluster.fork();
-    }
+//     for (let i = 0; i < numCPUs; i++) {
+//         cluster.fork();
+//     }
 
-    cluster.on("exit", (worker, code, signal) => {
-        console.log(`Worker ${worker.process.pid} died`);
-        console.log("Forking a new worker...");
-        cluster.fork();
-    });
-} else {
+//     cluster.on("exit", (worker, code, signal) => {
+//         console.log(`Worker ${worker.process.pid} died`);
+//         console.log("Forking a new worker...");
+//         cluster.fork();
+//     });
+// } else {
     mongoConnect();
     const server = httpServer.listen(port, async () => {
         logger.info("server on running", { port: port });
@@ -50,4 +50,4 @@ if (cluster.isMaster) {
             process.exit(1);
         });
     });
-}
+// }
