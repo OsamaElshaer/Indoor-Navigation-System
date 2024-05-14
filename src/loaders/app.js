@@ -22,7 +22,7 @@ const { logger } = require("../utils/logger");
 const { router } = require("../api/index");
 const swagger = require("../config/swagger");
 
-const handelSocketConnection = require("../config/socketIo");
+const { handleSocketConnection, isAuthSocket } = require("../config/socketIo");
 
 // -----------------------------------------Middleware-----------------------------------------------------------
 
@@ -74,11 +74,11 @@ const io = new Server(httpServer, {
 const nameSpace = io.of("/api/navigate");
 
 nameSpace
-    // .use(async (socket, next) => {
-    //     isAuthSocket(socket, next);
-    // })
+    .use(async (socket, next) => {
+        isAuthSocket(socket, next);
+    })
     .on("connection", (socket) => {
-        handelSocketConnection(socket, nameSpace);
+        handleSocketConnection(socket, nameSpace);
     });
 
 // ---------------------------------------------------------------------------------------------------------------

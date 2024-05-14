@@ -48,7 +48,7 @@ exports.validateSignup = [
                 value
             );
             if (organization) {
-                throw new Error("Organization username already exists");
+                throw new Error("Organization already exists");
             }
             return true;
         }),
@@ -77,19 +77,22 @@ exports.validateLogin = [
         .matches("^[0-9a-zA-Z ]+$", "i")
         .withMessage("Invalid username")
         .custom(async (value, { req }) => {
-            const user = await organizationModel.find("userName", value);
-            if (!user) {
+            const organization = await organizationModel.find(
+                "userName",
+                value
+            );
+            if (!organization) {
                 throw new Error("User does not exist");
             }
-            req.user = user;
+            req.organization = organization;
             return true;
         }),
     body("password")
         .isLength({ min: 8 })
         .withMessage("Invalid password")
         .custom(async (value, { req }) => {
-            const user = req.user;
-            const result = await bcrypt.compare(value, user.password);
+            const organization = req.organization;
+            const result = await bcrypt.compare(value, organization.password);
             if (!result) {
                 throw new Error("Incorrect password");
             }

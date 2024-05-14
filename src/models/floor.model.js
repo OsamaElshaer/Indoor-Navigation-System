@@ -30,8 +30,11 @@ class FloorModel extends FloorModelAbstract {
 
         return result;
     }
-    findAll() {
-        const cursor = getDb().collection("floorPlans").find();
+    findAll(id) {
+        console.log(id)
+        const cursor = getDb()
+            .collection("floorPlans")
+            .find({ orgId: new ObjectId(id) });
         return cursor.toArray();
     }
 

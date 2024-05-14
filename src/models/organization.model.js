@@ -17,22 +17,23 @@ class OrganizationModelAbstract {
 class OrganizationModel extends OrganizationModelAbstract {
     create = async (obj) => {
         const db = await getDb();
-        const result = await db.collection("Organizations").insertOne(obj);
+        const result = await db.collection("organizations").insertOne(obj);
         return result.insertedId;
     };
 
     find = async (key, value) => {
         const query = { [key]: value }; // Dynamically use key parameter as the key name
-        const Organization = await getDb()
-            .collection("Organizations")
+        const organization = await getDb()
+            .collection("organizations")
             .findOne(query);
-        return Organization;
+
+        return organization;
     };
 
     update = async (OrganizationId, updatedOrganizationData) => {
         const db = await getDb();
         const result = await db
-            .collection("Organizations")
+            .collection("organizations")
             .updateOne(
                 { _id: OrganizationId },
                 { $set: updatedOrganizationData }

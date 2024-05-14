@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const customError = require("../utils/customError");
+const { ObjectId } = require("mongodb");
 
 class AcessPointService {
     constructor(APmodel) {
@@ -8,11 +9,14 @@ class AcessPointService {
 
     add = async (req, res, next) => {
         try {
-            const { name, coordinates } = req.body;
+            const { name, coordinates, metaData } = req.body;
             const AP = {
-                name: name,
-                coordinates: coordinates,
+                name,
+                coordinates,
+                metaData,
+                orgId: new ObjectId(req.org.orgId),
             };
+
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 throw new customError("createAP", 422, errors.array()[0].msg);
@@ -45,7 +49,8 @@ class AcessPointService {
     };
     findAll = async (req, res, next) => {
         try {
-            const result = await this.APmodel.findAll();
+            const orgId = req.org.orgId
+            const result = await this.APmodel.findAll(orgId);
             return res.status(200).json({
                 msg: "all access points data",
                 data: result,

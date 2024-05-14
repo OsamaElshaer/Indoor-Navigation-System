@@ -19,6 +19,10 @@ class AuthService {
     signUp = async (req, res, next) => {
         try {
             const { organizationData } = req.body;
+            organizationData.environmentSettings = {
+                pathLossExponent: 2,
+                variance: 2,
+            };
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 throw new CustomError("signup", 422, errors.array()[0].msg);
@@ -59,12 +63,12 @@ class AuthService {
 
     login = async (req, res, next) => {
         try {
-            const user = req.user;
+            const organization = req.organization;
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 throw new CustomError("login", 422, errors.array()[0].msg);
             }
-            const payload = { userId: user._id, userName: user.userName };
+            const payload = { orgId: organization._id };
 
             const token = jwt.sign(payload, env.jwtSecretKey, {
                 expiresIn: "24h",
@@ -72,7 +76,7 @@ class AuthService {
             audit(
                 "organization",
                 "Login",
-                user.userName,
+                organization.userName,
                 req.method,
                 res.statusCode
             );

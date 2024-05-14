@@ -20,18 +20,21 @@ class AccessPOintModelAbstract {
 
 class AccessPointModel extends AccessPOintModelAbstract {
     add(obj) {
+        console.log(obj);
         const db = getDb();
         const result = db.collection("accessPoints").insertOne(obj);
         return result;
     }
     find(key, value) {
-        const query = { [key]: new ObjectId(value) };
+        const query = { [key]: new ObjectId(value) }; //find by id only
         const AP = getDb().collection("accessPoints").findOne(query);
 
         return AP;
     }
-    findAll() {
-        const cursor = getDb().collection("accessPoints").find();
+    findAll(id) {
+        const cursor = getDb()
+            .collection("accessPoints")
+            .find({ orgId: new ObjectId(id) });
         return cursor.toArray();
     }
 

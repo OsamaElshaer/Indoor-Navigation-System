@@ -47,6 +47,13 @@ paths:
                                         organizationType:
                                             type: string
                                             example: Business
+                                environmentSettings:
+                                    type: object
+                                    properties:
+                                        pathLossExponent:
+                                            type: number
+                                        variance:
+                                            type: number
             responses:
                 "201":
                     description: Organization signed up successfully
@@ -287,6 +294,8 @@ paths:
 
     /api/accessPoints/add:
         post:
+            security:
+                - bearerAuth: []
             summary: Add a new access point
             tags:
                 - Access Points
@@ -308,6 +317,14 @@ paths:
                                             type: number
                                         z:
                                             type: number
+                                metaData:
+                                    type: object
+                                    properties:
+                                        referenceDistance:
+                                            type: number
+                                        referenceRSSI:
+                                            type: number
+
             responses:
                 "201":
                     description: New access point added
@@ -328,6 +345,8 @@ paths:
 
     /api/accessPoints/findAll:
         get:
+            security:
+                - bearerAuth: []
             summary: Get all access points
             tags:
                 - Access Points
@@ -370,9 +389,20 @@ paths:
                                                             type: number
                                                             description: The Z coordinate of the access point
                                                             example: 70
+                                                metaData:
+                                                    type: object
+                                                    properties:
+                                                        referenceDistance:
+                                                            type: number
+                                                            example: 1.5
+                                                        referenceRSSI:
+                                                            type: number
+                                                            example: -50
 
     /api/accessPoints/find/{id}:
         get:
+            security:
+                - bearerAuth: []
             summary: Found Access Point
             tags:
                 - Access Points
@@ -421,9 +451,20 @@ paths:
                                                             type: number
                                                             description: The Z coordinate of the access point
                                                             example: 70
+                                                metaData:
+                                                    type: object
+                                                    properties:
+                                                        referenceDistance:
+                                                            type: number
+                                                            example: 1.5
+                                                        referenceRSSI:
+                                                            type: number
+                                                            example: -50
 
     /api/accessPoints/update:
         put:
+            security:
+                - bearerAuth: []
             summary: Update access point by ID
             tags:
                 - Access Points
@@ -448,12 +489,23 @@ paths:
                                             type: number
                                         z:
                                             type: number
+                                metaData:
+                                    type: object
+                                    properties:
+                                        referenceDistance:
+                                            type: number
+                                            example: 1.5
+                                        referenceRSSI:
+                                            type: number
+                                            example: -50
             responses:
                 "201":
                     description: Access point has been successfully updated
 
     /api/accessPoints/delete/{id}:
         delete:
+            security:
+                - bearerAuth: []
             summary: Delete access point by ID
             tags:
                 - Access Points
@@ -470,6 +522,8 @@ paths:
 
     /api/floors/add:
         post:
+            security:
+                - bearerAuth: []
             summary: Add a new floor plan
             tags:
                 - Floor Plans
@@ -529,6 +583,8 @@ paths:
 
     /api/floors/findAll:
         get:
+            security:
+                - bearerAuth: []
             summary: Get all floor plans
             tags:
                 - Floor Plans
@@ -563,6 +619,8 @@ paths:
 
     /api/floors/find/{id}:
         get:
+            security:
+                - bearerAuth: []
             summary: Find Floor Plan by ID
             tags:
                 - Floor Plans
@@ -602,6 +660,8 @@ paths:
 
     /api/floors/update:
         put:
+            security:
+                - bearerAuth: []
             summary: Update Floor Plan by ID
             tags:
                 - Floor Plans
@@ -645,6 +705,8 @@ paths:
 
     /api/floors/delete/{id}:
         delete:
+            security:
+                - bearerAuth: []
             summary: Delete Floor Plan by ID
             tags:
                 - Floor Plans

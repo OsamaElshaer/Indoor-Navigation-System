@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const customError = require("../utils/customError");
+const { ObjectId } = require("mongodb");
 
 class FloorService {
     constructor(floorModel) {
@@ -8,6 +9,7 @@ class FloorService {
     create = async (req, res, next) => {
         try {
             const { floorPlan } = req.body;
+            const orgId = new ObjectId(req.org.orgId);
 
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -17,7 +19,7 @@ class FloorService {
                     errors.array()[0].msg
                 );
             }
-            const result = await this.floorModel.add(floorPlan);
+            const result = await this.floorModel.add({ floorPlan, orgId });
             return res.status(201).json({
                 msg: "new a floor Plan added",
                 data: result,
@@ -49,7 +51,8 @@ class FloorService {
     };
     findAll = async (req, res, next) => {
         try {
-            const result = await this.floorModel.findAll();
+            const orgId = req.org.orgId;
+            const result = await this.floorModel.findAll(orgId);
             return res.status(200).json({
                 msg: "all floor plans ",
                 data: result,

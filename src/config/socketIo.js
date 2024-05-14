@@ -1,43 +1,56 @@
+const { jwtSecretKey } = require("../config/env");
+const jwt = require("jsonwebtoken");
 const {
     measureDistance,
 } = require("../algorithms/log-distance/log-distance-model");
 const { trilateration } = require("../algorithms/trilateration/trilateration");
-const {
-    constantsIndoorenviroment,
-    referenceRssi,
-    coordinatesOfAP,
-} = require("../config/env");
 
-const handelSocketConnection = function (socket, io) {
+const { AccessPointModel } = require("../models/accessPoints.model");
+const { OrganizationModel } = require("../models/organization.model");
+
+const accessPointObject = new AccessPointModel();
+const organizationObj = new OrganizationModel();
+
+const handleSocketConnection = async function (socket, io) {
     console.log("a user connected");
+
+    let APs = await accessPointObject.findAll(socket.org.orgId);
+    let { environmentSettings } = await organizationObj.find(socket.org.orgId);
 
     socket.on("sendRssiData", (beaconsData) => {
         console.log(beaconsData);
+        let beacons = [];
 
         for (const beaconName in beaconsData) {
+            const ap = APs.find((ap) => ap.name === beaconName);
             if (beaconsData.hasOwnProperty(beaconName)) {
-                const rssi = beaconsData[beaconName]; // Get the RSSI value
-
+                const rssi = beaconsData[beaconName];
                 const distance = measureDistance(
                     rssi,
-                    referenceRssi[beaconName],
-                    constantsIndoorenviroment.REFERENCE_DISTANCE,
-                    constantsIndoorenviroment.PATH_LOSS_EXPONENT,
-                    constantsIndoorenviroment.VARIANCE
+                    ap.metaData["referenceRSSI"],
+                    ap.metaData["referenceDistance"],
+                    environmentSettings.pathLossExponent,
+                    environmentSettings.variance
                 );
-
-                coordinatesOfAP[beaconName].d = distance;
+                const c = ap["coordinates"];
+                c.distance = distance;
+                beacons.push(c);
             }
         }
 
-        const beacons = Object.entries(coordinatesOfAP).map(([key, value]) => ({
-            x: value.x,
-            y: value.y,
-            distance: value.d,
-        }));
         const position = trilateration(beacons);
         socket.emit("position", position);
     });
 };
+const isAuthSocket = (socket, next) => {
+    try {
+        const token = socket.handshake.headers.authorization.split(" ")[1];
+        const org = jwt.verify(token, jwtSecretKey);
+        socket.org = org;
+        next();
+    } catch (error) {
+        next(new Error(error.message));
+    }
+};
 
-module.exports = handelSocketConnection;
+module.exports = { isAuthSocket, handleSocketConnection };

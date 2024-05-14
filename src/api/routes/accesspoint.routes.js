@@ -8,6 +8,7 @@ const {
     deleteValidator,
 } = require("../../utils/validations/accessPoint.validation");
 
+
 const { AcessPointService } = require("../../services/accessPoint.service");
 const { AccessPointModel } = require("../../models/accessPoints.model");
 
