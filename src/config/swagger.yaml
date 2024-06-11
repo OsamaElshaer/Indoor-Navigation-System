@@ -204,6 +204,62 @@ paths:
                 "422":
                     description: Validation error
 
+    
+    /api/organizations/generateQr:
+        post:
+            summary: Generate QR Code for Organization
+            security:
+                - bearerAuth: []
+            description: Generates a QR code for the organization and updates the organization's document with the QR code.
+            tags:
+                - Qr Code
+
+            responses:
+                "201":
+                    description: QR code has been successfully updated
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    msg:
+                                        type: string
+                                        example: QR code has been successfully updated
+                                    data:
+                                        type: object
+                                        properties:
+                                            status:
+                                                type: boolean
+                                                example: true
+    
+    /api/organization/{orgId}:
+        get:
+            summary: Get QR Code for Organization
+            description: Retrieves the QR code for the specified organization.
+            tags:
+                - Qr Code
+            parameters:
+                - name: orgId
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      description: The ID of the organization
+                      example: "60f5c8c6b4d3f20d8c0e8e5b"
+            responses:
+                "200":
+                    description: Successfully retrieved QR code
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    qr:
+                                        type: string
+                                        format: byte
+                                        description: Base64 encoded QR code image
+                                        example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAklEQVR4AewaftIAAAdKSURBVO3BQW4ku7YgQXdC+9+yt2afIwKByNStxz5m9osxLrEY4yKLMS6yGOMiizEushjjIosxLrIY4yKLMS6yGOMiizEushjjIosxLrIY4yKLMS6yGOMiP7yk8pcqTlROKnYqu4onVJ6o2KnsKk5UdhU7lZOKJ1T+UsUbizEushjjIosxLvLDh1V8ksobFW+ovFGxU9lVnKjsKnYqT6jsKp6o+CSVT1qMcZHFGBdZjHGRH75M5YmKJ1T+JRVPqJxUnFQ8ofJJKk9UfNNijIssxrjIYoyL/HA5lV3FN6nsKk4q3lAZ/2cxxkUWY1xkMcZFfhhHFScqu4qdyonKScVOZVfxhsqu4n/ZYoyLLMa4yGKMi/zwZRV/qWKnslN5Q2VX8UTFicpOZVfxhsonVfxLFmNcZDHGRRZjXOSHD1P5l1XsVE5UdhU7lV3FEyq7ip3KicquYqeyq9ipPKHyL1uMcZHFGBdZjHER+8X/MJVdxRMqb1Q8ofJExU5lV3Gi8kTF/7LFGBdZjHGRxRgX+eEllV3FTuWTKnYVJyq7il3FN6mcVLyhclJxonKi8kkV37QY4yKLMS6yGOMi9osvUtlVvKGyq9ip7CpOVHYVO5U3Kt5QOak4UdlVnKjsKt5QOan4pMUYF1mMcZHFGBexX/whlV3FTuWJip3KScVO5YmKE5VdxRMqJxU7lV3FicpJxYnKScWJyknFG4sxLrIY4yKLMS7yw4ep7Cp2FTuVXcWJyknFTuWNihOVXcVO5b+kclKxU3lDZVexq9ipfNJijIssxrjIYoyL/PBhFTuVk4qdyknFTuWkYqfyhMquYlexU9lVvKHyhMo3VexUTlT+0mKMiyzGuMhijIv88GUVJyonFTuVXcWJyq5ip3JS8Ukqu4qdyonKrmKnclJxUnGisqv4lyzGuMhijIssxriI/eI/pPJGxV9S2VXsVHYVJyq7ip3KruINlV3FTuWTKnYqJxVvLMa4yGKMiyzGuIj94oNUTipOVE4qdiq7ip3Kf6niRGVX8YTKGxU7lZOKncqu4l+yGOMiizEushjjIvaLF1R2FTuVXcUTKruKJ1R2FScqu4q/pLKrOFHZVZyo7Cp2KruKJ1R2FW+o7CpOVP5lFd+0GOMiizEushjjIvaL/2EqJxU7lZOKJ1T+SxU7lV3FTuWk4gmVk4q/tBjjIosxLrIY4yI/vKTylyp2Fd+kclKxU9lVPKGyq3ii4qRip3Kisqs4qdipPFHxxmKMiyzGuMhijIvYL15QeaLiRGVXsVPZVnKjsKnYqruKncquYqfyTRVvqOwq3lDZVfylxRgXWYxxkcUYFexX/whlV3FTuWJip3KScVO5YmKE5VdxRMqJxV/aTHGRRZjXGQxxkV++DKVJyreUNlVvKHyRMUTFW9U7FR2FTuVE5U3KnYqJxWftBjjIosxLrIY4yI//H+uYqeyq9ip7Cp2Kv+lip3KrmKn8kTFTmWnclKxU9lVvLEY4yKLMS6yGOMiP1ymYqfyRMUTKicVJyq7ijdU3qh4ouIJlW9ajHGRxRgXWYxxkR++rOKbKp6o2KmcqJxUnKjsKk5U3qjYqTyhclKxU9lVnFTsVD5pMcZFFmNcZDHGRX74MJW/pPJGxSep7CqeqNip7Cp2KjuVE5VdxSep/JcWY1xkMcZFFmNcxH4xxiUWY1xkMcZFFmNcZDHGRRZjXGQxxkUWY1xkMcZFFmNcZDHGRRZjXGQxxkUWY1xkMcZFFmNc5P8B/5+ye+zSwbYAAAAASUVORK5CYII=
+    
     /api/navigate:
         post:
             security:

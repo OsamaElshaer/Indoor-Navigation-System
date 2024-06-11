@@ -1,11 +1,13 @@
 const { validationResult } = require("express-validator");
 const customError = require("../utils/customError");
 const { ObjectId } = require("mongodb");
+const generateQRCode = require("../utils/generateQrCode");
 
 class FloorService {
     constructor(floorModel) {
         this.floorModel = floorModel;
     }
+
     create = async (req, res, next) => {
         try {
             const { floorPlan } = req.body;
@@ -40,7 +42,7 @@ class FloorService {
                     errors.array()[0].msg
                 );
             }
-            const result = await this.floorModel.find("_id", key);
+            const result = await this.floorModel.find("orgId", key);
             return res.status(200).json({
                 msg: "Found floor plan",
                 data: result,
@@ -49,6 +51,7 @@ class FloorService {
             next(error);
         }
     };
+    
     findAll = async (req, res, next) => {
         try {
             const orgId = req.org.orgId;

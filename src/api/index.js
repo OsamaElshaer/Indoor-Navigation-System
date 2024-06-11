@@ -5,6 +5,9 @@ const { navigateRouter } = require("./routes/navigate.routes");
 const router = require("express").Router();
 const { isAuth } = require("../middlewares/isAuth");
 
+
+
+
 router.use("/organizations", organizationRouter);
 router.use("/navigate", isAuth, navigateRouter);
 router.use("/accessPoints", isAuth, accessPointRouter);

@@ -10,7 +10,7 @@ const { FloorModel } = require("../../models/floor.model");
 const floorModelObj = new FloorModel();
 const floorServiceObj = new FloorService(floorModelObj);
 
-const { create,findAll,find,remove,update } = floorServiceObj;
+const { create, findAll, find, remove, update } = floorServiceObj;
 
 router.post("/add", createFloorValidation, create);
 router.get("/find/:key", find);

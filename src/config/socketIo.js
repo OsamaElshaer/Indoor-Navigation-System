@@ -41,6 +41,9 @@ const handleSocketConnection = async function (socket, io) {
         const position = trilateration(beacons);
         socket.emit("position", position);
     });
+    socket.on("disconnect", () => {
+        console.log("user disconnect");
+    });
 };
 const isAuthSocket = (socket, next) => {
     try {

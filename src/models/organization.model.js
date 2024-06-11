@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { getDb } = require("../loaders/database");
 
 class OrganizationModelAbstract {
@@ -22,7 +23,7 @@ class OrganizationModel extends OrganizationModelAbstract {
     };
 
     find = async (key, value) => {
-        const query = { [key]: value }; // Dynamically use key parameter as the key name
+        const query = { [key]: value };
         const organization = await getDb()
             .collection("organizations")
             .findOne(query);
@@ -35,10 +36,9 @@ class OrganizationModel extends OrganizationModelAbstract {
         const result = await db
             .collection("organizations")
             .updateOne(
-                { _id: OrganizationId },
+                { _id: new ObjectId(OrganizationId) },
                 { $set: updatedOrganizationData }
             );
-
         return result;
     };
 }

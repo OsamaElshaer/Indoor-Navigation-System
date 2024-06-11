@@ -6,10 +6,13 @@ const jwt = require("jsonwebtoken");
 const env = require("../config/env");
 const { audit } = require("../utils/audit");
 const crypto = require("crypto");
+const generateQr = require("../utils/generateQrCode");
 const {
     forgetPasswordTemplate,
     signUpTemplate,
 } = require("../utils/mailMessages");
+const generateQRCode = require("../utils/generateQrCode");
+const { ObjectId } = require("mongodb");
 
 class AuthService {
     constructor(organizationModel) {
@@ -177,6 +180,38 @@ class AuthService {
             });
         } catch (error) {
             next(error);
+        }
+    };
+
+    generateQr = async (req, res, next) => {
+        try {
+            let orgId = req.org.orgId;
+            let qr = await generateQRCode(orgId);
+            let resu = { qr: qr };
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                throw new CustomError("update", 422, errors.array()[0].msg);
+            }
+            const result = await this.organizationModel.update(orgId, resu);
+            return res.status(201).json({
+                msg: "QR code has been successfully updated",
+                data: { status: result.acknowledged },
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    getQrcode = async (req, res, next) => {
+        try {
+            const orgId = new ObjectId(req.org.orgId);
+            const result = await this.organizationModel.find("_id", orgId);
+            return res.status(201).json({
+                msg: "QR code",
+                data: { qrCode: result.qr },
+            });
+        } catch (error) {
+            next();
         }
     };
 }
