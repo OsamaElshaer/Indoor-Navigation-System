@@ -204,7 +204,7 @@ class AuthService {
 
     getQrcode = async (req, res, next) => {
         try {
-            const orgId = new ObjectId(req.org.orgId);
+            const orgId = new ObjectId(req.params.orgId);
             const result = await this.organizationModel.find("_id", orgId);
             return res.status(201).json({
                 msg: "QR code",

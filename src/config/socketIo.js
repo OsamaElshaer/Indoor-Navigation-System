@@ -7,6 +7,7 @@ const { trilateration } = require("../algorithms/trilateration/trilateration");
 
 const { AccessPointModel } = require("../models/accessPoints.model");
 const { OrganizationModel } = require("../models/organization.model");
+const { ObjectId } = require("mongodb");
 
 const accessPointObject = new AccessPointModel();
 const organizationObj = new OrganizationModel();
@@ -14,9 +15,10 @@ const organizationObj = new OrganizationModel();
 const handleSocketConnection = async function (socket, io) {
     console.log("a user connected");
 
-    let APs = await accessPointObject.findAll(socket.org.orgId);
-    let { environmentSettings } = await organizationObj.find(socket.org.orgId);
-
+    let APs = await accessPointObject.findAll(new ObjectId(socket.org.orgId));
+    let { environmentSettings } = await organizationObj.find(
+        new ObjectId(socket.org.orgId)
+    );
     socket.on("sendRssiData", (beaconsData) => {
         console.log(beaconsData);
         let beacons = [];

@@ -20,8 +20,8 @@ router.post("/signup", validateSignup, signUp);
 router.post("/login", validateLogin, login);
 router.post("/forgetPassword", valiadteforgetPassword, forgetPassword);
 router.post("/resetPassword/:resetToken", validateResetPassword, resetPassword);
-router.post("/resetPassword/:resetToken", validateResetPassword, resetPassword);
+router.get("/qrCode/:orgId", getQrcode);
+
 router.put("/generateQr", isAuth, generateQr);
-router.get("/qrCode", getQrcode);
 
 module.exports.organizationRouter = router;
