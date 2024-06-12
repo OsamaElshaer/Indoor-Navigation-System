@@ -20,7 +20,7 @@ router.post("/signup", validateSignup, signUp);
 router.post("/login", validateLogin, login);
 router.post("/forgetPassword", valiadteforgetPassword, forgetPassword);
 router.post("/resetPassword/:resetToken", validateResetPassword, resetPassword);
-router.get("/qrCode/:orgId", getQrcode);
+router.get("/qrCode", isAuth, getQrcode);
 
 router.put("/generateQr", isAuth, generateQr);
 

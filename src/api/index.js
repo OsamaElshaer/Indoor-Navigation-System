@@ -11,6 +11,6 @@ const { isAuth } = require("../middlewares/isAuth");
 router.use("/organizations", organizationRouter);
 router.use("/navigate", isAuth, navigateRouter);
 router.use("/accessPoints", isAuth, accessPointRouter);
-router.use("/floors", isAuth, floorRouter);
+router.use("/floors", floorRouter);
 
 module.exports.router = router;

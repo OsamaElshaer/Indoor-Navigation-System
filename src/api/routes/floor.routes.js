@@ -6,16 +6,17 @@ const {
 
 const { FloorService } = require("../../services/floor.service");
 const { FloorModel } = require("../../models/floor.model");
+const { isAuth } = require("../../middlewares/isAuth");
 
 const floorModelObj = new FloorModel();
 const floorServiceObj = new FloorService(floorModelObj);
 
 const { create, findAll, find, remove, update } = floorServiceObj;
 
-router.post("/add", createFloorValidation, create);
+router.post("/add", isAuth, createFloorValidation, create);
 router.get("/find/:key", find);
-router.get("/findAll", findAll);
-router.put("/update", update);
-router.delete("/delete/:_id", remove);
+router.get("/findAll", isAuth, findAll);
+router.put("/update", isAuth, update);
+router.delete("/delete/:_id", isAuth, remove);
 
 module.exports.floorRouter = router;
