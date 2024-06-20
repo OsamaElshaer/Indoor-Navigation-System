@@ -235,6 +235,8 @@ paths:
     /api/organizations/qrCode:
         get:
             summary: Get QR Code for Organization
+            security:
+                - bearerAuth: []
             description: Retrieves the QR code for the specified organization.
             tags:
                 - Qr Code
