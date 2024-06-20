@@ -1,8 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const {
-    createFloorValidation,
-} = require("../../utils/validations/floor.validation");
 
 const { FloorService } = require("../../services/floor.service");
 const { FloorModel } = require("../../models/floor.model");
@@ -13,7 +10,7 @@ const floorServiceObj = new FloorService(floorModelObj);
 
 const { create, findAll, find, remove, update } = floorServiceObj;
 
-router.post("/add", isAuth, createFloorValidation, create);
+router.post("/add", isAuth, create);
 router.get("/find/:key", find);
 router.get("/findAll", isAuth, findAll);
 router.put("/update", isAuth, update);
