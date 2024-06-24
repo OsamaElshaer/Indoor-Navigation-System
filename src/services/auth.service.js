@@ -74,7 +74,7 @@ class AuthService {
             const payload = { orgId: organization._id };
 
             const token = jwt.sign(payload, env.jwtSecretKey, {
-                expiresIn: "24h",
+                expiresIn: "10y",
             });
             audit(
                 "organization",
