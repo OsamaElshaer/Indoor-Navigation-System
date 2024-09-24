@@ -1,5 +1,4 @@
-\*\*\*\*# System Requirements Specification (_SRS_)
-
+# System Requirements Specification (SRS)
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
