@@ -43,7 +43,7 @@ class AccessPointModel extends AccessPOintModelAbstract {
         const result = db
             .collection("accessPoints")
             .updateOne({ _id: new ObjectId(APId) }, { $set: updatedAPData });
-        return result;
+        return result; 
     }
     remove(id) {
         const db = getDb();
