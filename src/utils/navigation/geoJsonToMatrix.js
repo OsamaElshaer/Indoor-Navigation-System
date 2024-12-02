@@ -45,4 +45,6 @@ function geoJsonToMatrix(geojson) {
 
     return matrix;
 }
+
+
 module.exports = geoJsonToMatrix;

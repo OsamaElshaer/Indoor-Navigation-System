@@ -16,7 +16,7 @@ class FloorService {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 throw new customError(
-                    "addfloorPlan",
+                    "addFloorPlan",
                     422,
                     errors.array()[0].msg
                 );
