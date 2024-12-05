@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+    app:
+        build:
+            context: .
+            target: development # Use the development stage from Dockerfile
+        volumes:
+            - ./src:/app/src:ro # Bind mount for live updates
+        command: npm run start:dev # Override CMD to run development server
