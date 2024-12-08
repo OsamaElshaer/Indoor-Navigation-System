@@ -16,12 +16,14 @@ const {
     REFERENCE_RSSI,
     COORDINATES_OF_AP,
     SERVER_URL,
+    REDIS_HOST,
 } = process.env;
 module.exports = {
     port: PORT,
     whiteList: WHITE_LIST,
     email: EMAIL,
     dbHost: DB_HOST,
+    redisHost: REDIS_HOST,
     nodemailerUser: NODEMAILER_USER,
     nodemailerPass: NODEMAILER_PASS,
     jwtSecretKey: JWT_SECRET_KEY,

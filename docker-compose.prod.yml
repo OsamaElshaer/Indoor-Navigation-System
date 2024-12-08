@@ -1,8 +1,6 @@
-version: "3.8"
-
 services:
     app:
-        build:
-            context: .
-            target: production # Use the production stage from Dockerfile
-        command: npm run start:prod # Override CMD to run production server
+    build:
+        context: .
+        target: production
+    command: npm run start:prod

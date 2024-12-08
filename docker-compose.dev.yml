@@ -1,10 +1,31 @@
-version: "3.8"
-
 services:
     app:
         build:
             context: .
-            target: development # Use the development stage from Dockerfile
+            target: development
         volumes:
-            - ./src:/app/src:ro # Bind mount for live updates
-        command: npm run start:dev # Override CMD to run development server
+            - ./src:/app/src:ro
+        command: npm run start:dev
+        environment:
+            - DB_HOST=mongodb://root:example@mongo:27017
+            - REDIS_HOST=redis://redis:6379
+    mongo:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+            MONGO_LOG_LEVEL: 1
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo-data:/data/db
+
+    redis:
+        image: redis
+        container_name: redis
+        ports:
+            - "6379:6379"
+
+volumes:
+    mongo-data:

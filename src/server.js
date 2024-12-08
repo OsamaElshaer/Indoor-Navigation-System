@@ -4,6 +4,7 @@ const { logger } = require("./utils/logger");
 const { mongoConnect } = require("./loaders/database");
 
 const cluster = require("cluster");
+const { client } = require("./loaders/redis");
 const numCPUs = require("os").cpus().length;
 
 // if (cluster.isMaster) {
@@ -19,35 +20,33 @@ const numCPUs = require("os").cpus().length;
 //         cluster.fork();
 //     });
 // } else {
-    mongoConnect();
-    const server = httpServer.listen(port, async () => {
-        logger.info("server on running", { port: port });
-    });
-    console.log(`Worker ${process.pid} started`);
-    process.on("unhandledRejection", (err) => {
-        console.log(err);
-        logger.error("Unhandled Promise Rejection:", err.message);
-        server.close((error) => {
-            if (error) {
-                logger.error(
-                    "Error occurred while closing the server:",
-                    error.message
-                );
-                process.exit(1);
-            }
-            logger.error("Server gracefully shut down");
-            process.exit(1);
-        });
-    });
-    process.on("uncaughtException", (err) => {
-        console.log(err);
-        logger.error("Uncaught Exception:");
-        server.close(() => {
+mongoConnect();
+client.connect();
+const server = httpServer.listen(port, async () => {
+    logger.info("server on running", { port: port });
+});
+console.log(`Worker ${process.pid} started`);
+process.on("unhandledRejection", (err) => {
+    console.log(err);
+    logger.error("Unhandled Promise Rejection:", err.message);
+    server.close((error) => {
+        if (error) {
             logger.error(
-                "Server shut down due to uncaught exception",
-                err.message
+                "Error occurred while closing the server:",
+                error.message
             );
             process.exit(1);
-        });
+        }
+        logger.error("Server gracefully shut down");
+        process.exit(1);
     });
+});
+process.on("uncaughtException", (err) => {
+    console.log(err);
+    logger.error("Uncaught Exception:");
+    server.close(() => {
+        logger.error("Server shut down due to uncaught exception", err.message);
+        process.exit(1);
+    });
+});
 // }
