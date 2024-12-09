@@ -2,8 +2,8 @@ function geoJsonToMatrix(geojson) {
     // Calculate the bounds of the matrix
     let maxX = 0;
     let maxY = 0;
-
-    geojson.features.forEach((feature) => {
+    geojson.floorPlan.features.forEach((feature) => {
+        console.log(feature);
         const { coordinates } = feature.geometry;
         coordinates[0].forEach((coord) => {
             maxX = Math.max(maxX, Math.ceil(coord[0]));
@@ -39,7 +39,7 @@ function geoJsonToMatrix(geojson) {
     }
 
     // Process each feature in the GeoJSON
-    geojson.features.forEach((feature) => {
+    geojson.floorPlan.features.forEach((feature) => {
         const { category } = feature.properties;
         const { coordinates } = feature.geometry;
 

@@ -1,21 +1,38 @@
 const { createClient } = require("redis");
+const { logger } = require("../utils/logger");
 const { redisHost } = require("../config/env");
 
-const client = createClient({ url: redisHost });
+const client = createClient({
+    url: redisHost,
+});
+
+const connectToRedis = async () => {
+    try {
+        await client.connect();
+        logger.info("Redis connected successfully!");
+    } catch (error) {
+        logger.error("Error connecting to Redis:", error);
+    }
+};
+
+// connectToRedis();
+
+module.exports = { client };
+
 client.on("connect", () => {
-    console.log("Connected to Redis");
+    logger.info("Connected to Redis successfully");
 });
 
 client.on("error", (err) => {
-    console.error("Error connecting to Redis:", err);
+    logger.error("Error connecting to Redis:", err);
 });
 
 client.on("ready", () => {
-    console.log("Redis connection is ready");
+    logger.info("Redis connection is ready");
 });
 
 client.on("close", () => {
-    console.log("Redis connection closed");
+    logger.info("Redis connection closed");
 });
 
 module.exports = {

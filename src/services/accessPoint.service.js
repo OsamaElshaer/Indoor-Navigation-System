@@ -49,7 +49,7 @@ class AcessPointService {
     };
     findAll = async (req, res, next) => {
         try {
-            const orgId = req.org.orgId
+            const orgId = req.org.orgId;
             const result = await this.APmodel.findAll(orgId);
             return res.status(200).json({
                 msg: "all access points data",

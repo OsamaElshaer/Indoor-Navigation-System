@@ -1,8 +1,3 @@
-const { AccessPointModel } = require("../../models/accessPoints.model");
-const { OrganizationModel } = require("../../models/organization.model");
-
-const accessPointObject = new AccessPointModel();
-const organizationObj = new OrganizationModel();
 const {
     measureDistance,
 } = require("../../algorithms/log-distance/log-distance-model");
@@ -11,10 +6,8 @@ const {
     trilateration,
 } = require("../../algorithms/trilateration/trilateration");
 
-async function calculatePositioning(beaconsData, orgId) {
+async function calculatePositioning(beaconsData, APs, envSet) {
     let beacons = [];
-    let APs = await accessPointObject.findAll(orgId);
-    let { environmentSettings } = await organizationObj.find(orgId);
     for (const beaconName in beaconsData) {
         const ap = APs.find((ap) => ap.name === beaconName);
         if (beaconsData.hasOwnProperty(beaconName)) {
@@ -23,8 +16,8 @@ async function calculatePositioning(beaconsData, orgId) {
                 rssi,
                 ap.metaData["referenceRSSI"],
                 ap.metaData["referenceDistance"],
-                environmentSettings.pathLossExponent,
-                environmentSettings.variance
+                envSet.pathLossExponent,
+                envSet.variance
             );
             const c = ap["coordinates"];
             c.distance = distance;
@@ -35,6 +28,5 @@ async function calculatePositioning(beaconsData, orgId) {
     const position = trilateration(beacons);
     return position;
 }
-
 
 module.exports.calculatePositioning = calculatePositioning;

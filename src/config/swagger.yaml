@@ -2,7 +2,15 @@ openapi: 3.0.0
 info:
     title: Indoor Navigation System
     version: 1.0.0
+components:
+    securitySchemes:
+        BearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT # Optional - Can be JWT, OAuth, etc.
 
+security:
+    - BearerAuth: [] # Global security for all endpoints
 paths:
     /api/organizations/signup:
         post:
@@ -208,7 +216,7 @@ paths:
         put:
             summary: Generate QR Code for Organization
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             description: Generates a QR code for the organization and updates the organization's document with the QR code.
             tags:
                 - Qr Code
@@ -235,7 +243,7 @@ paths:
         get:
             summary: Get QR Code for Organization
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             description: Retrieves the QR code for the specified organization.
             tags:
                 - Qr Code
@@ -264,7 +272,7 @@ paths:
     /api/navigate:
         post:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Define user position while movement.
             description: Open bidirectional communication where the user sends the RSSI of surrounding APs so the server can respond with the X,Y coordinates.
             tags:
@@ -308,7 +316,7 @@ paths:
     /api/navigate/positioning:
         post:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Define user position.
             description: User sends the RSSI of surrounding APs so the server can respond with the X,Y coordinates.
             tags:
@@ -352,7 +360,7 @@ paths:
     /api/navigate/routing:
         post:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: get the shortest path.
             description: User can have the shortest Path by the provide the start and the end which is the destination.
             tags:
@@ -399,7 +407,7 @@ paths:
     /api/accessPoints/add:
         post:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Add a new access point
             tags:
                 - Access Points
@@ -450,7 +458,7 @@ paths:
     /api/accessPoints/findAll:
         get:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Get all access points
             tags:
                 - Access Points
@@ -506,7 +514,7 @@ paths:
     /api/accessPoints/find/{id}:
         get:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Found Access Point
             tags:
                 - Access Points
@@ -568,7 +576,7 @@ paths:
     /api/accessPoints/update:
         put:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Update access point by ID
             tags:
                 - Access Points
@@ -609,7 +617,7 @@ paths:
     /api/accessPoints/delete/{id}:
         delete:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Delete access point by ID
             tags:
                 - Access Points
@@ -627,7 +635,7 @@ paths:
     /api/floors/add:
         post:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Add a new floor plan
             tags:
                 - Floor Plans
@@ -688,7 +696,7 @@ paths:
     /api/floors/findAll:
         get:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Get all floor plans
             tags:
                 - Floor Plans
@@ -724,7 +732,7 @@ paths:
     /api/floors/find/{id}:
         get:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Find Floor Plan by ID
             tags:
                 - Floor Plans
@@ -765,7 +773,7 @@ paths:
     /api/floors/update:
         put:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Update Floor Plan by ID
             tags:
                 - Floor Plans
@@ -810,7 +818,7 @@ paths:
     /api/floors/delete/{id}:
         delete:
             security:
-                - bearerAuth: []
+                - BearerAuth: []
             summary: Delete Floor Plan by ID
             tags:
                 - Floor Plans
@@ -824,10 +832,3 @@ paths:
             responses:
                 "204":
                     description: Floor Plan has been deleted
-
-components:
-    securitySchemes:
-        bearerAuth:
-            type: http
-            scheme: bearer
-            bearerFormat: JWT

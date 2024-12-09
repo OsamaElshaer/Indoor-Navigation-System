@@ -21,7 +21,6 @@ const numCPUs = require("os").cpus().length;
 //     });
 // } else {
 mongoConnect();
-client.connect();
 const server = httpServer.listen(port, async () => {
     logger.info("server on running", { port: port });
 });
