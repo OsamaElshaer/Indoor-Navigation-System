@@ -15,6 +15,10 @@
     "license": "ISC",
     "dependencies": {
         "@sendgrid/mail": "^7.7.0",
+        "morgan": "^1.10.0",
+        "nodemailer": "^6.9.3",
+        "nodemailer-sendgrid-transport": "^0.2.0",
+        "winston": "^3.9.0",
         "@turf/turf": "^7.0.0",
         "bcrypt": "^5.1.0",
         "cors": "^2.8.5",
@@ -28,14 +32,10 @@
         "jsonwebtoken": "^9.0.1",
         "moment": "^2.29.4",
         "mongodb": "^5.9.2",
-        "morgan": "^1.10.0",
-        "nodemailer": "^6.9.3",
-        "nodemailer-sendgrid-transport": "^0.2.0",
         "qrcode": "^1.5.3",
         "redis": "^4.7.0",
         "socket.io": "^4.7.5",
         "swagger-ui-express": "^5.0.0",
-        "winston": "^3.9.0",
         "yamljs": "^0.3.0"
     },
     "devDependencies": {

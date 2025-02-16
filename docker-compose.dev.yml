@@ -9,6 +9,8 @@ services:
         environment:
             - DB_HOST=mongodb://root:example@mongo:27017
             - REDIS_HOST=redis://redis:6379
+        depends_on:
+            - mongo
     mongo:
         image: mongo
         restart: always

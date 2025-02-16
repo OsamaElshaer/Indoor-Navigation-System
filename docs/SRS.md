@@ -1,40 +1,6 @@
-****# System Requirements Specification (_SRS_)
+# System Requirements Specification (_SRS_)
 
-## Table of Contents
-
-- [Table of Contents](#table-of-contents)
-- [1. Introduction ](#1-introduction-)
-  - [1.1 Purpose of the Document](#11-purpose-of-the-document)
-  - [1.2 Overview of the System](#12-overview-of-the-system)
-- [2. Overall Description ](#2-overall-description-)
-  - [2.1 Product Perspective](#21-product-perspective)
-  - [2.2 Product Functions](#22-product-functions)
-  - [2.3 User Classes and Characteristics](#23-user-classes-and-characteristics)
-  - [2.4 Operating Environment](#24-operating-environment)
-    - [4.2.1 Hardware Requirements:](#421-hardware-requirements)
-    - [4.2.2 Software Requirements:](#422-software-requirements)
-    - [4.2.3 Network Requirements:](#423-network-requirements)
-    - [4.2.4 Backend Infrastructure:](#424-backend-infrastructure)
-- [3. Specific Requirements ](#3-specific-requirements-)
-  - [3.1 Functional Requirements](#31-functional-requirements)
-    - [3.1.1 Authentication](#311-authentication)
-    - [3.1.2 Create Map](#312-create-map)
-    - [3.1.3 Positioning](#313-positioning)
-    - [3.1.4 Navigation](#314-navigation)
-  - [3.2 Non-Functional Requirements](#32-non-functional-requirements)
-    - [3.2.1 Performance](#321-performance)
-    - [3.2.2 Reliability](#322-reliability)
-  - [3.3 External Interfaces](#33-external-interfaces)
-    - [3.3.1 User Interface (UI):](#331-user-interface-ui)
-- [4. Use Cases ](#4-use-cases-)
-  - [4.1 User Registration](#41-user-registration)
-  - [4.2 Navigation](#42-navigation)
-- [5. System Models ](#5-system-models-)
-  - [5.1 Context Diagram](#51-context-diagram)
-  - [5.2 Data Flow Diagram (DFD)](#52-data-flow-diagram-dfd)
-  - [5.3 Data Example:](#53-data-example)
-
-## 1. Introduction <a name="introduction"></a>
+## 1. Introduction
 
 The System Requirements Specification (SRS) document outlines the requirements for the Indoor Navigator App.
 
@@ -46,7 +12,7 @@ This document serves as a comprehensive guide to understanding the functional an
 
 The Indoor Navigator App will consist of mobile applications for Android and iOS platforms, a backend server for data processing and storage, and a database for storing mapping information. The system will use Wi-Fi Signal strength techniques to collect and analyze RSSI within indoor environments, and trilateration algorithms to determine the user's position and provide navigation directions.Supporting various indoor environments, including shopping malls, airports, hospitals, and office buildings.
 
-## 2. Overall Description <a name="overall-description"></a>
+## 2. Overall Description
 
 ### 2.1 Product Perspective
 
@@ -55,7 +21,6 @@ The Indoor Navigator App operates independently as a standalone system, providin
 ### 2.2 Product Functions
 
 The key functions of the Indoor Navigator App include:
-
 
 -   Determining the user's position using trilateration algorithms.
 -   Providing real-time navigation directions to guide users to their destinations indoors.
@@ -76,7 +41,7 @@ It depends but should consider it as follow: <b>"Just for considerations"
 
 #### 4.2.1 Hardware Requirements:
 
--   **Processor**: 
+-   **Processor**:
 -   **Memory (RAM)**:
 -   **Storage**:
 
@@ -95,7 +60,7 @@ It depends but should consider it as follow: <b>"Just for considerations"
 -   **Database Management System**:
 -   **Scalability**:
 
-## 3. Specific Requirements <a name="specific-requirements"></a>
+## 3. Specific Requirements <a
 
 ### 3.1 Functional Requirements
 
@@ -105,10 +70,10 @@ It depends but should consider it as follow: <b>"Just for considerations"
 
 #### 3.1.2 Create Map
 
-
--   convert the drawing map  to geojson format asa we can represent it an any technology  .
+-   convert the drawing map to geojson format asa we can represent it an any technology .
 
 #### 3.1.3 Positioning
+
 -   The system will collect Wi-Fi signal data from the user's device to detect user position an indoor environments.
 -   The system will use trilateration algorithms to determine the user's position indoors.Positioning accuracy will be within [accuracy threshold at most 2 meters].
 
@@ -138,15 +103,11 @@ It depends but should consider it as follow: <b>"Just for considerations"
 #### 3.3.1 User Interface (UI):
 
 <div style="display: flex; justify-content: space-between; ">
-    <img src="https://media.canva.com/v2/image-resize/format:PNG/height:675/quality:100/uri:s3%3A%2F%2Fmedia-private.canva.com%2FPHRqA%2FMAGJb2PHRqA%2F1%2Fp.png/watermark:F/width:800?csig=AAAAAAAAAAAAAAAAAAAAAIUs30nNv1_Xy90VjMY0BuNEwz4J2NpnJYHGAQ-CrMCI&exp=1726616897&osig=AAAAAAAAAAAAAAAAAAAAAGgErNrLjpX2zCOJp-Jz0nhfhqgbexd8QZks8etTGT6O&signer=media-rpc&x-canva-quality=screen"alt="" width="300" height="400" style="margin-right: 10px;">
-    <img src="https://images.squarespace-cdn.com/content/v1/5ca8e7d816b6407a87e3163a/1558543828012-M97B0FB82LQLC5MYX92V/ke17ZwdGBToddI8pDm48kKzGbY0oME9ouJ0IUEr4f20UqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8GRo6ASst2s6pLvNAu_PZdJA-hHPFKvWHM3688Ee3tjIGpg4i4-DSo1vDM_m1SqPKAwpsUYmsQGs1E3mDO6URUk/maps.jpg" alt="" width="300" height="400" style="margin-right: 10px;">
-
+    <img src="https://th.bing.com/th/id/OIP.yCW0cvOk0TRvJYF-dQLRBwHaEI?rs=1&pid=ImgDetMain"alt="" >
 
 </div>
 
-
-
-## 4. Use Cases <a name="use-cases"></a>
+## 4. Use Cases
 
 ### 4.1 User Registration
 
@@ -172,17 +133,18 @@ It depends but should consider it as follow: <b>"Just for considerations"
     3. System calculates the optimal route based on current location and destination.
     4. System provides navigation directions to the user.
 
-## 5. System Models <a name="system-models"></a>
+## 5. System Models
 
 ### 5.1 Context Diagram
-<img src="./images/context digram.png" alt="" width="800" height="300">
+
+<img src="./docs/images/context digram.png" alt="" width="800" height="300">
 
 ### 5.2 Data Flow Diagram (DFD)
-<img src="./images/DFD.png" alt="" width="1000" height="500">
 
-
+<img src="./docs/images/DFD.png" alt="" width="1000" height="500">
 
 ### 5.3 Data Example:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -267,8 +229,3 @@ It depends but should consider it as follow: <b>"Just for considerations"
 
 </body>
 </html>
-
-
-
-
-

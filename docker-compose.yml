@@ -9,5 +9,4 @@ services:
             - ./src:/app/src:ro
         env_file:
             - ./.env
-        depends_on:
-            - mongo
+
