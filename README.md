@@ -4,6 +4,9 @@
 
 An **indoor positioning system** that determines a user's location using **trilateration** with **RSSI values from beacons**. The system allows **organizations** to upload maps in **GeoJSON format** and associate them with **access points** for accurate indoor navigation.
 
+## 📽️ Presentation
+[View the Presentation on Canva](https://www.canva.com/design/DAGJBla4D8E/CSQXnvb7xHmudXmcs_kQYQ/edit)
+
 ## Features
 
 1. **Authentication & User Management**
@@ -27,7 +30,7 @@ An **indoor positioning system** that determines a user's location using **trila
 
 ## API Documentation
 
-🔗 **Swagger UI**: [http://localhost:4000/api-docs](http://localhost:4000/api-docs)
+🔗 **Swagger UI**: [https://indoor-navigation-system.onrender.com/api-docs](https://indoor-navigation-system.onrender.com/api-docs)
 
 ## Installation & Setup
 
